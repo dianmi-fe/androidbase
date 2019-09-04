@@ -1,4 +1,5 @@
 
+# 采用AndroidX进行开发（谨慎使用）
 
 # 使用规范
 - 颜色资源文件：统一在【CommonSdk】用cxxx命名，例如：` <color name="cFFFFFF">#ffffff</color>`

@@ -1,0 +1,65 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+if (isBuildModule.toBoolean()) {
+    apply plugin: 'kotlin-kapt'
+}
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "api_host", "\"${rootProject.ext.api.api_host}\"")
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    sourceSets {
+        main {
+            if (isBuildModule.toBoolean()) {
+                manifest.srcFile 'src/app/AndroidManifest.xml'
+                java.srcDirs += 'src/app/java'
+                res.srcDirs += 'src/app/res'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.dependencies["kotlin_stdlib"]
+    implementation rootProject.ext.dependencies["appcompat"]
+    api project(path: ':CommonMvvm')
+    api project(path: ':CommonView')
+    if (isBuildModule.toBoolean()) {
+        kapt rootProject.ext.dependencies["dagger2-compiler"]
+    }
+    api rootProject.ext.dependencies["dagger2"]
+    api rootProject.ext.dependencies["arouter"]
+    debugImplementation rootProject.ext.dependencies["canary-debug"]
+}

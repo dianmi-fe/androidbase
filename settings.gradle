@@ -1,0 +1,1 @@
+include ':app', ':CommonArchitecture', ':CommonSdk', ':CommonView', ':Module_Calendar', ':CommonMvvm', ':CommonRepository', ':CommonBaseService', ':CommonMvp', 'CommonNetwork'

@@ -4,7 +4,7 @@
 - 颜色资源文件：统一在【CommonSdk】用cxxx命名，例如：` <color name="cFFFFFF">#ffffff</color>`
 - 每个Module都会对资源文件做统一规范，详情见Gradle文件中的resourcePrefix配置，由于这个配置只能检测XML文件，所有每个Module中的独有的图片资源文件，在文件名面前加上相应的模块名，例如：登录模块：login_xxx
 - 控件 id 使用驼峰命名，除公共模块，id 命名都要包含自己的模块名。比如 tvHomeOpenCart 表示 home 模块的 TextView，用来打开购物车。
-
+- 所有Adapter类不能写在V中，必须单独新建一个类
 
 
 # 项目架构

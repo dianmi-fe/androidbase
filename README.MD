@@ -58,27 +58,27 @@
 			</tr>
 			<tr>
 				<td>
-				module_calendar
+				module_calendar<br>
 				日历模块
 				</td>
 				<td>
-				module_employee
+				module_employee<br>
 				员工模块
 				</td>
 				<td>
-				module_user
+				module_user<br>
 				用户模块
 				</td>
 				<td>
-				module_hr
+				module_hr<br>
 				人事模块
 				</td>
 				<td>
-				module_browser
+				module_browser<br>
 				web模块
 				</td>
 				<td>
-				module_login
+				module_login<br>
 				登录模块
 				</td>
 			</tr>
@@ -94,23 +94,25 @@
 				</td>
 			</tr>
 			<tr>
-				<td  colspan="3">
+				<td  colspan="2">
 				CommonMvvm/CommonMvp<br>
 				MVVP或者MVP模式的库，一个项目只能选择一种库进行开发
 				</td>
-				<td  colspan="3">
+				<td  colspan="1">
 				CommonView<br>
 				通用的自定义View框架,一些APP特有的view效果可以抽出独立成一个库
 				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-				CommonArchitecture<br>
-				通用框架库。包含BaseApplication、常用的工具类以及架构层的封装</td>
-				<td colspan="3"></td>
+				<td  colspan="3">
+				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
+				CommonArchitecture<br>
+				通用框架库。包含BaseApplication、常用的工具类以及架构层的封装</td>
+				<td colspan="5"></td>
+			</tr>
+			<tr>
+				<td colspan="1">
 				CommonNetwork<br>
 				网络库，目前是okhttp + retrfoit
 				</td>
@@ -118,7 +120,7 @@
 				CommonRepository
 				数据管理库
 				</td>
-				<td colspan="3"/>
+				<td colspan="4"/>
 			</tr>
 		</table>	
 		

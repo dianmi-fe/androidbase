@@ -98,7 +98,7 @@
 				CommonMvvm/CommonMvp<br>
 				MVVP或者MVP模式的库，一个项目只能选择一种库进行开发
 				</td>
-				<td  colspan="1">
+				<td  colspan="2">
 				CommonView<br>
 				通用的自定义View框架,一些APP特有的view效果可以抽出独立成一个库
 				</td>

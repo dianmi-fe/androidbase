@@ -2,7 +2,7 @@ package com.arnold.common.architecture.di.module
 
 import android.app.Application
 import android.text.TextUtils
-import com.arnold.common.architecture.http.BaseUrl
+import com.arnold.common.network.http.BaseUrl
 import com.arnold.common.architecture.integration.ConfigModule
 import com.arnold.common.architecture.integration.cache.Cache
 import com.arnold.common.architecture.integration.cache.CacheType

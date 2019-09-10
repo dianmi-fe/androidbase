@@ -14,9 +14,9 @@ abstract class BaseMvvmActivity<VM : BaseViewModel<*>> : BaseActivity() {
 
     var mViewModel: VM? = null
 
-    override
 
-    fun initData(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         //初始化ViewModel
         initViewModel()
     }
@@ -26,7 +26,7 @@ abstract class BaseMvvmActivity<VM : BaseViewModel<*>> : BaseActivity() {
         val modelClass: Class<VM>
         val type = javaClass.genericSuperclass
         if (type is ParameterizedType) {
-            modelClass = type.actualTypeArguments[1] as Class<VM>
+            modelClass = type.actualTypeArguments[0] as Class<VM>
         } else {
             modelClass = BaseViewModel::class.java as Class<VM>
         }

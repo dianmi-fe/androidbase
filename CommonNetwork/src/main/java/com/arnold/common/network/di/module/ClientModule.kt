@@ -2,8 +2,7 @@ package com.arnold.common.network.di.module
 
 import android.app.Application
 import android.content.Context
-import com.arnold.common.architecture.http.log.HttpLogger
-import com.arnold.common.architecture.utils.LogUtil
+import com.arnold.common.network.http.log.HttpLogger
 import com.arnold.common.network.http.GlobalHttpHandler
 import com.arnold.common.network.http.converter.CustomGsonConverterFactory
 import com.arnold.common.network.utils.ZipHelper
@@ -22,11 +21,8 @@ import javax.inject.Singleton
 //import com.sun.xml.internal.fastinfoset.DecoderStateTables.UTF8
 //import jdk.nashorn.internal.objects.ArrayBufferView.buffer
 //import jdk.nashorn.internal.objects.NativeRegExp.source
-import okio.BufferedSource
 import okhttp3.ResponseBody
 import okio.Buffer
-import okio.Utf8
-import java.nio.charset.Charset
 import kotlin.text.Charsets.UTF_8
 
 
@@ -96,10 +92,16 @@ class ClientModule {
     ): OkHttpClient {
 
 
+        val interceptor = HttpLoggingInterceptor(HttpLogger())
+        // BASIC 请求/响应行
+        // HEADER 请求/响应行 + 头
+        // BODY 请求/响应行 + 头 + 体
+        interceptor.level = HttpLoggingInterceptor.Level.BODY
+
         builder.connectTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
             .readTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
             .writeTimeout(TIME_OUT.toLong(), TimeUnit.SECONDS)
-            .addNetworkInterceptor(HttpLoggingInterceptor(HttpLogger()))
+            .addNetworkInterceptor(interceptor)
 
 
         handler?.let {

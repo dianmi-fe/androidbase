@@ -44,18 +44,19 @@ interface IFragment {
 
 
     /**
+     * 如果 [layout] 不是Vewi或者(Int && != 0), 框架则不会调用 [initView],throw [IllegalArgumentException]
+     */
+    fun layout(): Any
+
+
+    /**
      * 初始化 View
      *
-     * @param inflater
-     * @param container
+     * @param view
      * @param savedInstanceState
      * @return
      */
-    fun initView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View
+    fun initView(view: View, savedInstanceState: Bundle?)
 
     /**
      * 初始化数据

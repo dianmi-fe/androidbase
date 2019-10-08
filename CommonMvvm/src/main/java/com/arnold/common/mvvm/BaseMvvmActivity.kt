@@ -19,16 +19,17 @@ abstract class BaseMvvmActivity<VM : BaseViewModel<*>> : BaseActivity() {
         super.onCreate(savedInstanceState)
         //初始化ViewModel
         initViewModel()
+        initData(savedInstanceState)
     }
 
     protected fun initViewModel() {
 
         val modelClass: Class<VM>
         val type = javaClass.genericSuperclass
-        if (type is ParameterizedType) {
-            modelClass = type.actualTypeArguments[0] as Class<VM>
+        modelClass = if (type is ParameterizedType) {
+            type.actualTypeArguments[0] as Class<VM>
         } else {
-            modelClass = BaseViewModel::class.java as Class<VM>
+            BaseViewModel::class.java as Class<VM>
         }
 
         mViewModel = ViewModelProviders.of(this, mViewModelFactory)[modelClass]

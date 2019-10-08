@@ -51,8 +51,7 @@ abstract class BaseActivity : AppCompatActivity(), IActivity,
 
         initView(savedInstanceState)
 
-        initData(savedInstanceState)
-
+//        initData(savedInstanceState)
     }
 
 }

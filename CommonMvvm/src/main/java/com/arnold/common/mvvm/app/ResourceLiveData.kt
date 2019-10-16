@@ -1,7 +1,7 @@
 package com.arnold.common.mvvm.app
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.arnold.common.mvvm.data.Resource
 import io.reactivex.Flowable
 import io.reactivex.Observable

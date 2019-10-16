@@ -18,9 +18,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-//import com.sun.xml.internal.fastinfoset.DecoderStateTables.UTF8
-//import jdk.nashorn.internal.objects.ArrayBufferView.buffer
-//import jdk.nashorn.internal.objects.NativeRegExp.source
 import okhttp3.ResponseBody
 import okio.Buffer
 import kotlin.text.Charsets.UTF_8
@@ -209,14 +206,14 @@ class ClientModule {
     /**
      * [Retrofit] 自定义配置接口
      */
-    interface RetrofitConfiguration {
+    public interface RetrofitConfiguration {
         fun configRetrofit(context: Context, builder: Retrofit.Builder)
     }
 
     /**
      * [OkHttpClient] 自定义配置接口
      */
-    interface OkhttpConfiguration {
+    public interface OkhttpConfiguration {
         fun configOkhttp(context: Context, builder: OkHttpClient.Builder)
     }
 

@@ -66,12 +66,16 @@ object DataHelper {
         return mmkv.decodeString(key, "")
     }
 
-    fun <T : Parcelable> decodeParcelable(key: String, tClass: Class<T>): T {
+    fun <T : Parcelable> decodeParcelable(key: String, tClass: Class<T>): T? {
         return mmkv.decodeParcelable(key, tClass)
     }
 
     fun decodeStringSet(key: String): Set<String> {
         return mmkv.decodeStringSet(key, Collections.emptySet())
+    }
+
+    fun containsKey(key:String):Boolean{
+        return mmkv.containsKey(key)
     }
 
     fun removeKey(key: String) {

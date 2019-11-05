@@ -6,7 +6,7 @@
 - 控件 id 使用驼峰命名，除公共模块，id 命名都要包含自己的模块名。比如 tvHomeOpenCart 表示 home 模块的 TextView，用来打开购物车。
 - 所有Adapter类不能写在V中，必须单独新建一个类
 - 所有的bean文件，只能作为数据载体，不能在里面做任何的逻辑操作，所有的逻辑判断操作全部移到工具类里面处理，每个模块都可以有自己独立的工具类
--
+- 
 
 
 # 项目架构
@@ -128,9 +128,9 @@
 				</td>
 				<td colspan="4"/>
 			</tr>
-		</table>
-
-
+		</table>	
+		
+		
 ## 请求全局拦截处理
 自定义了`GsonConverterFactory`，对数据进行拦截处理
 具体查看`com.arnold.common.sdk.app.GlobalHttpHandlerImpl.onHttpInterceptResponse()`方法实现
@@ -140,7 +140,7 @@
 - 简单数据存储
     * DataHelper 类，目前采用微信的MMKV代替SharedPreferences进行简单的数据存储
     * 数据库：目前还没有定下来，可以采用GreenDao或者ROOM
-
+    
 ## 模块特有的初始化类
 实现ConfigModule，便可以进行一些单独模块的初始化，考虑到不同模块可能需要初始化的顺序优先级，采用mLoadWeight字段进行区分，数值越大初始化越先，具体使用方案请看【公共的初始化】
 里面的实现

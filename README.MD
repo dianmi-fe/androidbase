@@ -5,6 +5,8 @@
 - 每个Module都会对资源文件做统一规范，详情见Gradle文件中的resourcePrefix配置，由于这个配置只能检测XML文件，所有每个Module中的独有的图片资源文件，在文件名面前加上相应的模块名，例如：登录模块：login_xxx
 - 控件 id 使用驼峰命名，除公共模块，id 命名都要包含自己的模块名。比如 tvHomeOpenCart 表示 home 模块的 TextView，用来打开购物车。
 - 所有Adapter类不能写在V中，必须单独新建一个类
+- 所有的bean文件，只能作为数据载体，不能在里面做任何的逻辑操作，所有的逻辑判断操作全部移到工具类里面处理，每个模块都可以有自己独立的工具类
+- 
 
 
 # 项目架构
@@ -81,6 +83,10 @@
 				module_login<br>
 				登录模块
 				</td>
+				<td>
+				OldEhr<br>
+				旧项目
+				</td>
 			</tr>
 			<tr>
 				<td  colspan="4">
@@ -143,12 +149,12 @@
   例如请求的BaseURL,在【CommonSdk】模块中`com.arnold.common.sdk.app.GlobalConfiguration`进行配置，
 
 ## 开发模式
-项目中提供了MVVM以及MVP的架构。后续的项目的初始化，选择其中一种开发就行
+项目中提供了MVVM以及MVP的架构。后续的项目开发，可以其中一种模式开发也可以两种模式融合使用。**非组件化项目不建议一个项目采用两种模式开发**
 
 ## MVVM
 - V: Actvity/Fragment
 - VM：VM 为视图提供数据，主要方式为提供 LiveData 或者 Rx 的数据源、或者某些数据可以直接返回的，则提供对应的方法或属性供 V 直接访问。
-  - LiveData 不一定就是作出成员，也可以作为方法的返回值直接返回。
+  - LiveData 不一定就需要在类中创建实例对象，也可以作为方法的返回值直接返回。
   - LiveData 的使用不要局限于 VM 中，没有限制，只要场景适合，就可以使用。
 - M：负责数据的存储和获取，统一命名为 xxxModel。
 - MVVM 三者通过 Dagger2 进行绑定

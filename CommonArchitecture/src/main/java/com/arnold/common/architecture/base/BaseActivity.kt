@@ -12,7 +12,7 @@ import com.arnold.common.architecture.utils.obtainAppComponentFromContext
 /**
  * 当需要继承特定的[actiivty]第三方库时，自己自定义一个[activity]，再按照[BaseActivity]的格式复制过去
  */
-abstract class BaseActivity : AppCompatActivity(), IActivity{
+abstract class  BaseActivity : AppCompatActivity(), IActivity{
 
     lateinit var context: Activity
 

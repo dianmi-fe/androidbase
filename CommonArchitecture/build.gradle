@@ -43,7 +43,6 @@ dependencies {
     }
     api rootProject.ext.dependencies["glide"]
     kapt rootProject.ext.dependencies["glide-compiler"]
-    implementation rootProject.ext.dependencies["glide-loader-okhttp3"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
 }
 

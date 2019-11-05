@@ -1,6 +1,7 @@
 package com.arnold.common.architecture.utils
 
 import android.app.Activity
+import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
 import android.view.View
@@ -57,7 +58,8 @@ fun Context.getColorId(rid: Int): Int {
  * 获得颜色
  */
 fun Context.getColorName(colorName: String): Int {
-    return getColorId(resources.getIdentifier(colorName, "color", packageName)
+    return getColorId(
+        resources.getIdentifier(colorName, "color", packageName)
     )
 }
 
@@ -106,7 +108,7 @@ fun Activity.statuInScreen() {
  *
  * @param view
  */
-fun View.removeChild(){
+fun View.removeChild() {
     if (parent is ViewGroup) {
         (parent as ViewGroup).removeView(this)
     }
@@ -125,4 +127,18 @@ fun killAll() {
  */
 fun exitApp() {
     AppManager.getAppManager().appExit()
+}
+
+
+fun Context.getProcessName(): String {
+    val am = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager? ?: return ""
+    val runningApps = am.runningAppProcesses ?: return ""
+    for (proInfo in runningApps) {
+        if (proInfo.pid === android.os.Process.myPid()) {
+            if (proInfo.processName != null) {
+                return proInfo.processName
+            }
+        }
+    }
+    return ""
 }

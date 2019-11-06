@@ -131,7 +131,11 @@
 
 ## 请求全局拦截处理
 自定义了`GsonConverterFactory`，对数据进行拦截处理
-具体查看`com.arnold.common.sdk.app.GlobalHttpHandlerImpl.onHttpInterceptResponse()`方法实现
+具体查看
+```
+com.arnold.common.sdk.app.GlobalHttpHandlerImpl.onHttpInterceptResponse()
+```
+方法实现
 
 
 ## 本地数据存储 CommonRepository
@@ -144,19 +148,25 @@
 里面的实现
 
 ## 公共的初始化
-  例如请求的BaseURL,在【CommonSdk】模块中`com.arnold.common.sdk.app.GlobalConfiguration`进行配置，
+  例如请求的BaseURL,在【CommonSdk】模块中
+  ```java
+  com.arnold.common.sdk.app.GlobalConfiguration
+  ```
+  进行配置，
 
 ## <span id="autoSzie">横屏适配</span>
 实现`me.jessyan.autosize.internal.CustomAdapt` 接口
 
-`@Override
+```java
+@Override
      public boolean isBaseOnWidth() {
          return false;
      }
      @Override
      public float getSizeInDp() {
          return 667;
-     }`
+     }
+```
 
 
 ## 开发模式

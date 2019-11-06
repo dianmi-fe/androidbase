@@ -1,4 +1,4 @@
-package com.arnold.common.architecture.utils
+package com.arnold.common.network.utils
 
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger

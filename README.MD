@@ -1,12 +1,10 @@
-
-
 # 使用规范
-- 颜色资源文件：统一在【CommonSdk】用cxxx命名，例如：` <color name="cFFFFFF">#ffffff</color>`
-- 每个Module都会对资源文件做统一规范，详情见Gradle文件中的resourcePrefix配置，由于这个配置只能检测XML文件，所有每个Module中的独有的图片资源文件，在文件名面前加上相应的模块名，例如：登录模块：login_xxx
-- 控件 id 使用驼峰命名，除公共模块，id 命名都要包含自己的模块名。比如 tvHomeOpenCart 表示 home 模块的 TextView，用来打开购物车。
+1. 颜色资源文件：统一在【CommonSdk】用cxxx命名，例如：` <color name="cFFFFFF">#ffffff</color>`
+- 每个Module都会对资源文件做统一规范，详情见Gradle文件中的 **resourcePrefix** 配置，由于这个配置只能检测XML文件，所有每个Module中的独有的图片资源文件，在文件名面前加上相应的模块名，例如：登录模块：**login_xxx**
+- 控件 id 使用驼峰命名，除公共模块，id 命名都要包含自己的模块名。比如 **tvHomeOpenCart** 表示 home 模块的 TextView，用来打开购物车。
 - 所有Adapter类不能写在V中，必须单独新建一个类
 - 所有的bean文件，只能作为数据载体，不能在里面做任何的逻辑操作，所有的逻辑判断操作全部移到工具类里面处理，每个模块都可以有自己独立的工具类
-- 
+- 当页面需要横屏时` android:screenOrientation="landscape"`，具体查看 [横屏适配](#autoSzie)
 
 
 # 项目架构
@@ -128,9 +126,9 @@
 				</td>
 				<td colspan="4"/>
 			</tr>
-		</table>	
-		
-		
+		</table>
+
+
 ## 请求全局拦截处理
 自定义了`GsonConverterFactory`，对数据进行拦截处理
 具体查看`com.arnold.common.sdk.app.GlobalHttpHandlerImpl.onHttpInterceptResponse()`方法实现
@@ -140,13 +138,26 @@
 - 简单数据存储
     * DataHelper 类，目前采用微信的MMKV代替SharedPreferences进行简单的数据存储
     * 数据库：目前还没有定下来，可以采用GreenDao或者ROOM
-    
+
 ## 模块特有的初始化类
 实现ConfigModule，便可以进行一些单独模块的初始化，考虑到不同模块可能需要初始化的顺序优先级，采用mLoadWeight字段进行区分，数值越大初始化越先，具体使用方案请看【公共的初始化】
 里面的实现
 
 ## 公共的初始化
   例如请求的BaseURL,在【CommonSdk】模块中`com.arnold.common.sdk.app.GlobalConfiguration`进行配置，
+
+## <span id="autoSzie">横屏适配</span>
+实现`me.jessyan.autosize.internal.CustomAdapt` 接口
+
+`@Override
+     public boolean isBaseOnWidth() {
+         return false;
+     }
+     @Override
+     public float getSizeInDp() {
+         return 667;
+     }`
+
 
 ## 开发模式
 项目中提供了MVVM以及MVP的架构。后续的项目开发，可以其中一种模式开发也可以两种模式融合使用。**非组件化项目不建议一个项目采用两种模式开发**

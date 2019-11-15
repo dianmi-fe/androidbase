@@ -3,7 +3,7 @@ package com.arnold.common.mvp
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-class BasePresenter<BV : IView, M : IModel>(var mView: BV?, var mModel: M?) :
+open class BasePresenter<BV : IView, M : IModel>(var mView: BV?, var mModel: M) :
     IPresenter {
 
     init {
@@ -34,8 +34,7 @@ class BasePresenter<BV : IView, M : IModel>(var mView: BV?, var mModel: M?) :
 
     override fun onDestroy() {
         unSubscribe()
-        mModel?.onDestroy()
-        mModel = null
+        mModel.onDestroy()
         mView = null
     }
 

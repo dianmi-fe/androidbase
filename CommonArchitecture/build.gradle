@@ -41,6 +41,16 @@ dependencies {
     api(rootProject.ext.dependencies["rxandroid2"]) {
         exclude module: 'rxjava'
     }
+    api(rootProject.ext.dependencies["rxlifecycle2"]) {
+        exclude module: 'rxjava'
+        exclude module: 'jsr305'
+    }
+    api(rootProject.ext.dependencies["rxlifecycle2-android"]) {
+        exclude module: 'support-annotations'
+        exclude module: 'rxjava'
+        exclude module: 'rxandroid'
+        exclude module: 'rxlifecycle'
+    }
     api rootProject.ext.dependencies["glide"]
     kapt rootProject.ext.dependencies["glide-compiler"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]

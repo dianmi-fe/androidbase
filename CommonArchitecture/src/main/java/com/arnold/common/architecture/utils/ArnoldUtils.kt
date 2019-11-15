@@ -3,17 +3,14 @@ package com.arnold.common.architecture.utils
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
-import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import com.arnold.common.architecture.base.App
 import com.arnold.common.architecture.di.component.AppComponent
 import com.arnold.common.architecture.integration.AppManager
-import okhttp3.MediaType
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import kotlin.experimental.and
 
 
 /**
@@ -21,10 +18,10 @@ import kotlin.experimental.and
  */
 fun Context.obtainAppComponentFromContext(): AppComponent {
     Preconditions.checkState(
-        applicationContext is App,
-        "%s must be implements %s",
-        applicationContext.javaClass.name,
-        App::class.java.getName()
+            applicationContext is App,
+            "%s must be implements %s",
+            applicationContext.javaClass.name,
+            App::class.java.getName()
     )
     return (applicationContext as App).getAppComponent()
 }
@@ -59,7 +56,7 @@ fun Context.getColorId(rid: Int): Int {
  */
 fun Context.getColorName(colorName: String): Int {
     return getColorId(
-        resources.getIdentifier(colorName, "color", packageName)
+            resources.getIdentifier(colorName, "color", packageName)
     )
 }
 
@@ -141,4 +138,43 @@ fun Context.getProcessName(): String {
         }
     }
     return ""
+}
+
+
+fun Context.getHeightInPx(): Float {
+    return resources.displayMetrics.heightPixels.toFloat()
+}
+
+fun Context.getWidthInPx(): Float {
+    return resources.displayMetrics.widthPixels.toFloat()
+}
+
+fun Context.getHeightInDp(): Int {
+    val height = resources.displayMetrics.heightPixels.toFloat()
+    return px2dip(height)
+}
+
+fun Context.getWidthInDp(): Int {
+    val height = resources.displayMetrics.heightPixels.toFloat()
+    return px2dip(height)
+}
+
+fun Context.dip2px(dpValue: Float): Int {
+    val scale = resources.displayMetrics.density
+    return (dpValue * scale + 0.5f).toInt()
+}
+
+fun Context.px2dip(pxValue: Float): Int {
+    val scale = resources.displayMetrics.density
+    return (pxValue / scale + 0.5f).toInt()
+}
+
+fun Context.px2sp(pxValue: Float): Int {
+    val scale = resources.displayMetrics.density
+    return (pxValue / scale + 0.5f).toInt()
+}
+
+fun Context.sp2px(spValue: Float): Int {
+    val scale = resources.displayMetrics.density
+    return (spValue * scale + 0.5f).toInt()
 }

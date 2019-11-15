@@ -15,7 +15,7 @@ class HttpLogger : HttpLoggingInterceptor.Logger {
             return
         }
 
-        if (message.startsWith("--> POST")) {
+        if (message.startsWith("--> POST") || message.startsWith("--> GET")) {
             mMessage.setLength(0)
         }
 

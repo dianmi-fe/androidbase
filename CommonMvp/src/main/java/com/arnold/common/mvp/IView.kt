@@ -12,6 +12,11 @@ interface IView {
     fun hideLoading(){}
 
     /**
+     * 停止加载
+     */
+    fun stopLoading(){}
+
+    /**
      * 显示信息
      *
      * @param message 消息内容, 不能为 `null`

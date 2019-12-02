@@ -44,7 +44,11 @@ open class BasePresenter<BV : IView, M : IModel>(var mView: BV?, var mModel: M) 
                 }
             }
         }
+    }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    fun stopLoading() {
+        mView?.stopLoading()
     }
 
     /**

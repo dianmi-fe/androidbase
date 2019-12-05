@@ -46,11 +46,6 @@ open class BasePresenter<BV : IView, M : IModel>(var mView: BV?, var mModel: M) 
         }
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun stopLoading() {
-        mView?.stopLoading()
-    }
-
     /**
      * 只有当 `mRootView` 不为 null, 并且 `mRootView` 实现了 [LifecycleOwner] 时, 此方法才会被调用
      * 所以当您想在 [Service] 以及一些自定义 [View] 或自定义类中使用 `Presenter` 时
@@ -60,6 +55,7 @@ open class BasePresenter<BV : IView, M : IModel>(var mView: BV?, var mModel: M) 
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     open fun onDestroy(owner: LifecycleOwner) {
+
         /**
          * 注意, 如果在这里调用了 [.onDestroy] 方法, 会出现某些地方引用 `mModel` 或 `mRootView` 为 null 的情况
          * 比如在 [RxLifecycle] 终止 [Observable] 时, 在 [io.reactivex.Observable.doFinally] 中却引用了 `mRootView` 做一些释放资源的操作, 此时会空指针
@@ -70,6 +66,7 @@ open class BasePresenter<BV : IView, M : IModel>(var mView: BV?, var mModel: M) 
     }
 
     override fun onDestroy() {
+        mView?.stopLoading()
         unSubscribe()
         mView?.hideLoading()
         mModel.onDestroy()

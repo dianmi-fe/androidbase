@@ -73,7 +73,6 @@ class AppDelegate(context: Context) : AppLifecycles, App {
             it.extras().put(IntelligentCache.getKeyOfKeep(ConfigModule::class.java.name), mModules)
         }
 
-
         //注册框架内部已实现的 Activity 生命周期逻辑
         application.registerActivityLifecycleCallbacks(mActivityLifecycle)
 

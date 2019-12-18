@@ -12,8 +12,8 @@ import okhttp3.OkHttpClient
 import com.google.gson.GsonBuilder
 import io.rx_cache2.internal.RxCache
 import com.alibaba.android.arouter.launcher.ARouter
-import com.arnold.common.architecture.utils.LogUtil
 import com.arnold.common.network.di.module.ClientModule
+import com.arnold.common.network.utils.LogUtil
 import com.arnold.common.repository.di.module.RepositoryModule
 import com.arnold.common.repository.utils.DataHelper
 import com.arnold.common.sdk.BuildConfig

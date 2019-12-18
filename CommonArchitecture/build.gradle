@@ -2,6 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+//apply from: '../push.gradle'
+
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -10,7 +13,7 @@ android {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName rootProject.ext.android.versionName
         testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
 
         consumerProguardFiles 'consumer-rules.pro'
@@ -28,16 +31,21 @@ android {
         targetCompatibility 1.8
     }
 
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-    implementation rootProject.ext.dependencies["dagger2"]
-    implementation rootProject.ext.dependencies["kotlin_stdlib"]
+    compileOnly rootProject.ext.dependencies["dagger2"]
+    compileOnly rootProject.ext.dependencies["kotlin_stdlib"]
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["support-v4"]
     implementation rootProject.ext.dependencies["annotations"]
-    api project(path: ':CommonNetwork')
-    api project(path: ':CommonRepository')
+//    api project(path: ':CommonNetwork')
+//    api project(path: ':CommonRepository')
+    api  'com.arnold.ehr:ehrNetwork:0.1.1'
+    api  'com.arnold.ehr:ehrRepository:0.1.1'
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["rxjava2"]
     api(rootProject.ext.dependencies["rxandroid2"]) {
@@ -57,4 +65,28 @@ dependencies {
     kapt rootProject.ext.dependencies["glide-compiler"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
 }
+
+publish {
+    userOrg = 'arnoldtian'              //bintray注册的用户名
+    repoName = 'Ehr'                    //    仓库名
+    groupId = 'com.arnold.ehr'         //compile引用时的第1部分groupId
+    artifactId = 'ehrArchitecture'     //compile引用时的第2部分项目名
+    publishVersion = rootProject.ext.android.versionName    //compile引用时的第3部分版本号
+    desc = '二号人事部通用框架库。包含BaseApplication、常用的工具类以及架构层的封装'
+    website = 'http://gitlab-test.dianmi365.com'
+}
+
+
+def getPomName() {
+    return "CommonArchitecture"
+}
+
+def getPomDescription() {
+    return "通用框架库。包含BaseApplication、常用的工具类以及架构层的封装"
+}
+
+def getArtifactId() {
+    return "architecture"
+}
+
 

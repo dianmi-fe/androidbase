@@ -18,13 +18,13 @@ class MainFragment : BaseMvvmFragment<LoginFragmentViewModel>() {
             .inject(this)
     }
 
-    override fun initView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.calendar_fragment_main, container, false)
+    override fun layout(): Any = R.layout.calendar_fragment_main
+
+    override fun initView(view: View, savedInstanceState: Bundle?) {
+
     }
+
+
 
     override fun initData(savedInstanceState: Bundle?) {
         mViewModel?.login()

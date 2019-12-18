@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+//apply plugin: 'com.novoda.bintray-release'
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -22,13 +25,28 @@ android {
         }
     }
 
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 dependencies {
     implementation rootProject.ext.dependencies["kotlin_stdlib"]
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["support-v4"]
-    implementation rootProject.ext.dependencies["dagger2"]
+    compileOnly rootProject.ext.dependencies["dagger2"]
 
-    api project(path: ':CommonArchitecture')
+    compileOnly project(path: ':CommonArchitecture')
+//    compileOnly 'com.arnold.ehr:ehrArchitecture:0.1.1'
 }
+
+//publish {
+//    userOrg = 'arnoldtian'              //bintray注册的用户名
+//    repoName = 'Ehr'                    //    仓库名
+//    groupId = 'com.arnold.ehr'         //compile引用时的第1部分groupId
+//    artifactId = 'ehrMvp'     //compile引用时的第2部分项目名
+//    publishVersion = rootProject.ext.android.versionName    //compile引用时的第3部分版本号
+//    desc = '二号人事部mvp架构开发模式'
+//    website = 'http://gitlab-test.dianmi365.com'
+//}

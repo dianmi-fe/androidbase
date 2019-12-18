@@ -55,6 +55,10 @@ dependencies {
     implementation rootProject.ext.dependencies["kotlin_stdlib"]
     implementation rootProject.ext.dependencies["appcompat-v7"]
     implementation rootProject.ext.dependencies["support-v4"]
+    implementation rootProject.ext.dependencies["annotations"]
+    api rootProject.ext.dependencies["gson"]
+//    api ('com.arnold.ehr:ehrArchitecture:0.1.0')
+    api project(path: ':CommonArchitecture')
     api project(path: ':CommonMvvm')
     api project(path: ':CommonView')
     if (isBuildModule.toBoolean()) {

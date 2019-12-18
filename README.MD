@@ -100,7 +100,7 @@
 			<tr>
 				<td  colspan="2">
 				CommonMvvm/CommonMvp<br>
-				MVVP或者MVP模式的库，一个项目只能选择一种库进行开发
+				MVVM或者MVP模式的库，一个项目只能选择一种库进行开发
 				</td>
 				<td  colspan="2">
 				CommonView<br>

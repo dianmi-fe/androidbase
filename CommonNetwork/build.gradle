@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+
+//apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -12,9 +14,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode 1
         versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
+        testInstrumentationRunner rootProject.ext.dependencies["androidJUnitRunner"]
     }
 
     buildTypes {
@@ -27,6 +27,10 @@ android {
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -57,3 +61,14 @@ dependencies {
         exclude module: 'retrofit'
     }
 }
+
+//publish {
+//    userOrg = 'arnoldtian'              //bintray注册的用户名
+//    repoName = 'Ehr'                    //    仓库名
+//    groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
+//    artifactId = 'x-ehrNetwork'     //compile引用时的第2部分项目名
+//    publishVersion = rootProject.ext.android.versionName    //compile引用时的第3部分版本号
+//    desc = 'Androidx,二号人事部网络库，目前是okhttp + retrfoit'
+//    website = 'http://gitlab-test.dianmi365.com'
+//}
+

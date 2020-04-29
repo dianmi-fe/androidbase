@@ -3,33 +3,26 @@ package com.arnold.common.mvp.integration.lifecycle
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import com.trello.rxlifecycle2.android.ActivityEvent
-import dagger.Lazy
 import io.reactivex.subjects.Subject
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * 配合 [ActivityLifecycleable] 使用,使 [Activity] 具有 [RxLifecycle] 的特性
  */
-@Singleton
-class ActivityLifecycleForRxLifecycle
-@Inject
-constructor() : Application.ActivityLifecycleCallbacks {
+class ActivityLifecycleForRxLifecycle : Application.ActivityLifecycleCallbacks {
 
-    @Inject
-    internal lateinit var mFragmentLifecycle: Lazy<FragmentLifecycleForRxLifecycle>
+//    @Inject
+//    internal lateinit var mFragmentLifecycle: Lazy<FragmentLifecycleForRxLifecycle>
 
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         if (activity is ActivityLifecycleable) {
             obtainSubject(activity).onNext(ActivityEvent.CREATE)
-            if (activity is FragmentActivity) {
-                (activity as FragmentActivity).supportFragmentManager.registerFragmentLifecycleCallbacks(
-                    mFragmentLifecycle.get(), true
-                )
-            }
+//            if (activity is FragmentActivity) {
+//                (activity as FragmentActivity).supportFragmentManager.registerFragmentLifecycleCallbacks(
+//                    mFragmentLifecycle.get(), true
+//                )
+//            }
         }
     }
 

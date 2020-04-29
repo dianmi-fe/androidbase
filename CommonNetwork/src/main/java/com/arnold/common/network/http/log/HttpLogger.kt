@@ -1,7 +1,7 @@
 package com.arnold.common.network.http.log
 
 import android.text.TextUtils
-import com.arnold.common.architecture.utils.LogUtil
+import com.arnold.common.network.utils.LogUtil
 import com.arnold.common.network.utils.decodeUnicode
 import com.arnold.common.network.utils.formatJson
 import okhttp3.logging.HttpLoggingInterceptor

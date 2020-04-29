@@ -2,20 +2,15 @@ package com.arnold.common.mvp.integration.lifecycle
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.trello.rxlifecycle2.android.FragmentEvent
 import io.reactivex.subjects.Subject
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * 配合 [FragmentLifecycleable] 使用,使 [Fragment] 具有 [RxLifecycle] 的特性
  */
-@Singleton
-class FragmentLifecycleForRxLifecycle
-@Inject
-constructor() : FragmentManager.FragmentLifecycleCallbacks() {
+class FragmentLifecycleForRxLifecycle : FragmentManager.FragmentLifecycleCallbacks() {
 
     override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
         if (f is FragmentLifecycleable) {

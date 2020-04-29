@@ -2,12 +2,14 @@ package com.arnold.common.mvp.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.arnold.common.architecture.base.delegate.AppLifecycles;
 import com.arnold.common.architecture.di.module.GlobalConfigModule;
 import com.arnold.common.architecture.integration.ConfigModule;
 import com.arnold.common.mvp.integration.lifecycle.ActivityLifecycleForRxLifecycle;
+import com.arnold.common.mvp.integration.lifecycle.FragmentLifecycleForRxLifecycle;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,6 +41,6 @@ public class MvpGlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectFragmentLifecycle(@NotNull Context context, @NotNull List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
-
+        lifecycles.add(new FragmentLifecycleForRxLifecycle());
     }
 }

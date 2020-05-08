@@ -1,6 +1,7 @@
 package com.arnold.common.mvp.integration.lifecycle
 
-import io.reactivex.subjects.Subject
+import io.reactivex.Observable
+
 
 /**
  *  * 让 [Activity]/[Fragment] 实现此接口,即可正常使用 [RxLifecycle]
@@ -8,5 +9,5 @@ import io.reactivex.subjects.Subject
  */
 interface Lifecycleable<T> {
 
-    fun provideLifecycleSubject(): Subject<T>
+    fun provideLifecycleSubject(): Observable<T>
 }

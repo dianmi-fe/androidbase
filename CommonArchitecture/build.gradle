@@ -44,24 +44,26 @@ dependencies {
 
 //    api project(path: ':CommonNetwork')
 //    api project(path: ':CommonRepository')
-    api  'com.arnoldx.ehr:x-ehrNetwork:0.1.1'
-    api  'com.arnoldx.ehr:x-ehrRepository:0.1.1'
+    api 'com.arnoldx.ehr:x-ehrNetwork:0.1.1'
+    api 'com.arnoldx.ehr:x-ehrRepository:0.1.1'
     api rootProject.ext.dependencies["eventbus"]
-    api rootProject.ext.dependencies["rxjava2"]
-    api(rootProject.ext.dependencies["rxandroid2"]) {
+    api rootProject.ext.dependencies["rxjava"]
+    api(rootProject.ext.dependencies["rxandroid"]) {
         exclude module: 'rxjava'
     }
-    api(rootProject.ext.dependencies["rxlifecycle2"]) {
+    api(rootProject.ext.dependencies["rxlifecycle"]) {
         exclude module: 'rxjava'
         exclude module: 'jsr305'
     }
-    api(rootProject.ext.dependencies["rxlifecycle2-android"]) {
+    api(rootProject.ext.dependencies["rxlifecycle-android"]) {
         exclude module: 'support-annotations'
         exclude module: 'rxjava'
         exclude module: 'rxandroid'
         exclude module: 'rxlifecycle'
     }
     api rootProject.ext.dependencies["glide"]
+    api rootProject.ext.dependencies["autodispose"]
+    api rootProject.ext.dependencies["autodispose-lifecycle"]
     kapt rootProject.ext.dependencies["glide-compiler"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
 }

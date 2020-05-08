@@ -36,8 +36,8 @@ dependencies {
     implementation rootProject.ext.dependencies["appcompat"]
     compileOnly rootProject.ext.dependencies["dagger2"]
 
-//    compileOnly project(path: ':CommonArchitecture')
-    compileOnly 'com.arnoldx.ehr:x-ehrArchitecture:0.1.1'
+    compileOnly project(path: ':CommonArchitecture')
+//    compileOnly 'com.arnoldx.ehr:x-ehrArchitecture:0.1.1'
 }
 
 publish {

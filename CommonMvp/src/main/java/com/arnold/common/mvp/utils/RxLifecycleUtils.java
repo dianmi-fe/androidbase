@@ -1,18 +1,23 @@
 package com.arnold.common.mvp.utils;
 
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LifecycleOwner;
+
 import com.arnold.common.architecture.utils.Preconditions;
 import com.arnold.common.mvp.IView;
 import com.arnold.common.mvp.integration.lifecycle.ActivityLifecycleable;
 import com.arnold.common.mvp.integration.lifecycle.FragmentLifecycleable;
 import com.arnold.common.mvp.integration.lifecycle.Lifecycleable;
-import com.trello.rxlifecycle2.LifecycleTransformer;
-import com.trello.rxlifecycle2.RxLifecycle;
-import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.android.FragmentEvent;
-import com.trello.rxlifecycle2.android.RxLifecycleAndroid;
+import com.trello.rxlifecycle3.LifecycleTransformer;
+import com.trello.rxlifecycle3.RxLifecycle;
+import com.trello.rxlifecycle3.android.ActivityEvent;
+import com.trello.rxlifecycle3.android.FragmentEvent;
+import com.trello.rxlifecycle3.android.RxLifecycleAndroid;
 
-import io.reactivex.annotations.NonNull;
+import autodispose2.AutoDispose;
+import autodispose2.AutoDisposeConverter;
+import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider;
 
 /**
  * 使用此类操作 RxLifecycle 的特性
@@ -21,6 +26,13 @@ public class RxLifecycleUtils {
 
     private RxLifecycleUtils() {
         throw new IllegalStateException("you can't instantiate me!");
+    }
+
+
+    public static <T> AutoDisposeConverter<T> bindLifecycle(LifecycleOwner lifecycleOwner) {
+        return AutoDispose.autoDisposable(
+                AndroidLifecycleScopeProvider.from(lifecycleOwner)
+        );
     }
 
     /**

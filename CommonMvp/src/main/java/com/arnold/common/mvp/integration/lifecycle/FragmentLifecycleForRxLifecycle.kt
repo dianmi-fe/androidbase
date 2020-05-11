@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.trello.rxlifecycle2.android.FragmentEvent
+import com.trello.rxlifecycle3.android.FragmentEvent
 import io.reactivex.subjects.Subject
 
 /**

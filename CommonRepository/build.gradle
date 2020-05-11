@@ -46,7 +46,7 @@ dependencies {
     api rootProject.ext.dependencies["mmkv"]
 }
 
-//
+
 //publish {
 //    userOrg = 'arnoldtian'              //bintray注册的用户名
 //    repoName = 'Ehr'                    //    仓库名

@@ -15,11 +15,20 @@ class MainActivity : BaseActivity() {
     @JvmField
     var calendarService: ICalendarService? = null
 
+    @Autowired(name = RouterHub.CALENDAR_SERVICE_CALENDARSERVICE)
+    @JvmField
+    var calendar1Service: ICalendarService? = null
+
+    @Autowired(name = RouterHub.CALENDAR_SERVICE_CALENDARSERVICE)
+    @JvmField
+    var calendar2Service: ICalendarService? = null
+
     override fun enableARouterInject(): Boolean = true
 
     override fun layout(): Any = R.layout.activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
+
         if (calendarService != null) {
             appTvContent.text = "成功加载日历组件"
         } else {

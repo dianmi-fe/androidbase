@@ -39,8 +39,8 @@ dependencies {
     implementation rootProject.ext.dependencies["core_ktx"]
     implementation rootProject.ext.dependencies["constraintlayout"]
     compileOnly rootProject.ext.dependencies["dagger2"]
-    compileOnly project(path: ':CommonArchitecture')
-//    compileOnly 'com.arnoldx.ehr:x-ehrArchitecture:0.1.1'
+//    compileOnly project(path: ':CommonArchitecture')
+    compileOnly 'com.arnoldx.ehr:x-ehrArchitecture:0.1.2'
     api rootProject.ext.dependencies["lifecycle-runtime"]
     api rootProject.ext.dependencies["lifecycle-extensions"]
     kapt rootProject.ext.dependencies["lifecycle-compiler"]

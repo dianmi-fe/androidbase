@@ -1,6 +1,7 @@
 package com.arnold.common.mvp.integration.lifecycle
 
 import io.reactivex.Observable
+import io.reactivex.subjects.Subject
 
 
 /**
@@ -9,5 +10,5 @@ import io.reactivex.Observable
  */
 interface Lifecycleable<T> {
 
-    fun provideLifecycleSubject(): Observable<T>
+    fun provideLifecycleSubject(): Subject<T>
 }

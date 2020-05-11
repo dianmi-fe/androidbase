@@ -3,7 +3,7 @@ package com.arnold.common.mvp.integration.lifecycle
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import com.trello.rxlifecycle2.android.ActivityEvent
+import com.trello.rxlifecycle3.android.ActivityEvent
 import io.reactivex.subjects.Subject
 
 /**

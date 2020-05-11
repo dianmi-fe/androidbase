@@ -1,3 +1,3 @@
 include ':app', ':CommonArchitecture', ':CommonSdk', ':CommonView', ':CommonMvvm', ':CommonRepository', ':CommonBaseService', ':CommonMvp', 'CommonNetwork'
 
-//include ':Module_Calendar'
+include ':Module_Calendar'

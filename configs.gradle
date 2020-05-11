@@ -15,7 +15,7 @@ ext {
     ]
 
     android = [
-            versionName      : "0.1.1",
+            versionName      : "0.1.2",
             compileSdkVersion: 28,
             buildToolsVersion: "28.0.3",
             minSdkVersion    : 17,

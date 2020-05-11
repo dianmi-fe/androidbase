@@ -54,9 +54,9 @@ public interface IRepositoryManager {
     void clearAllCache();
 
     /**
-     * 获取 {@link Context}
+     * 获取 Context
      *
-     * @return {@link Context}
+     * @return Context
      */
     @NonNull
     Context getContext();

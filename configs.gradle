@@ -15,7 +15,7 @@ ext {
     ]
 
     android = [
-            versionName      : "0.1.2",
+            versionName      : "0.1.6",
             compileSdkVersion: 28,
             buildToolsVersion: "28.0.3",
             minSdkVersion    : 17,
@@ -26,15 +26,15 @@ ext {
             androidXVersion          : "1.1.0",
             androidArchSdkVersion    : "1.1.1",
             retrofitSdkVersion       : "2.8.1",
-            dagger2SdkVersion        : "2.24",
-            glideSdkVersion          : "4.9.0",
+            dagger2SdkVersion        : "2.28.3",
+            glideSdkVersion          : "4.11.0",
             rxlifecycleSdkVersion    : "3.1.0",
             espressoSdkVersion       : "3.2.0",
             canarySdkVersion         : "1.5.4",
             arouterSdkVersion        : "1.5.0",
             aRouterCompilerSdkVersion: "1.2.2",
             okhttp3SdkVersion        : "4.1.0",
-            canarySdkVersion         : "2.0-beta-3",
+            canarySdkVersion         : "2.4",
     ]
 
     dependencies = [
@@ -98,9 +98,9 @@ ext {
             "dagger2-android-processor": "com.google.dagger:dagger-android-processor:${version["dagger2SdkVersion"]}",
             "arouter"                  : "com.alibaba:arouter-api:${version.arouterSdkVersion}",
             "arouter-compiler"         : "com.alibaba:arouter-compiler:${version.aRouterCompilerSdkVersion}",
-            "gson"                     : "com.google.code.gson:gson:2.8.5",
+            "gson"                     : "com.google.code.gson:gson:2.8.6",
             "eventbus"                 : "org.greenrobot:eventbus:3.1.1",
-            "mmkv"                     : "com.tencent:mmkv-static:1.0.23",
+            "mmkv"                     : "com.tencent:mmkv-static:1.2.2",
             "wechat-mta"               : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.3",
             "retrofitUrlManager"       : "me.jessyan:retrofit-url-manager:1.4.0",
             "immersionbar"             : "com.gyf.immersionbar:immersionbar:3.0.0",

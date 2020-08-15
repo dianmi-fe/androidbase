@@ -15,7 +15,6 @@ abstract class BaseMvpFragment<P : IPresenter> : BaseFragment(), IView , Fragmen
     @Inject
     lateinit var presenter: P
 
-
     override fun provideLifecycleSubject(): Subject<FragmentEvent> = mLifecycleSubject
 
     override fun onDestroy() {

@@ -6,20 +6,22 @@ import com.orhanobut.logger.PrettyFormatStrategy
 
 object LogUtil {
 
-    fun init(logDebug: Boolean) {
+    var logDebug: Boolean = false
+    fun init(logDebug: Boolean, tag: String = "LOGS") {
         val power = PrettyFormatStrategy.newBuilder()
             .showThreadInfo(true)  //（可选）是否显示线程信息。 默认值为true
             .methodCount(0)         // （可选）要显示的方法行数。 默认2
             .methodOffset(0)        // （可选）隐藏内部方法调用到偏移量。 默认5
-            .tag("EHR_LOG")           //（可选）每个日志的全局标记。 默认PRETTY_LOGGER
+            .tag(tag)           //（可选）每个日志的全局标记。 默认PRETTY_LOGGER
             .build()
-
+        this.logDebug = logDebug
         Logger.addLogAdapter(object : AndroidLogAdapter(power) {
             override fun isLoggable(priority: Int, tag: String?): Boolean {
                 return logDebug
             }
         })
     }
+
 
     fun d(message: String) {
         Logger.d(message)

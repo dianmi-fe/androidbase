@@ -15,9 +15,6 @@ import com.trello.rxlifecycle3.android.ActivityEvent;
 import com.trello.rxlifecycle3.android.FragmentEvent;
 import com.trello.rxlifecycle3.android.RxLifecycleAndroid;
 
-import autodispose2.AutoDispose;
-import autodispose2.AutoDisposeConverter;
-import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider;
 
 /**
  * 使用此类操作 RxLifecycle 的特性
@@ -29,11 +26,11 @@ public class RxLifecycleUtils {
     }
 
 
-    public static <T> AutoDisposeConverter<T> bindLifecycle(LifecycleOwner lifecycleOwner) {
-        return AutoDispose.autoDisposable(
-                AndroidLifecycleScopeProvider.from(lifecycleOwner)
-        );
-    }
+//    public static <T> AutoDisposeConverter<T> bindLifecycle(LifecycleOwner lifecycleOwner) {
+//        return AutoDispose.autoDisposable(
+//                AndroidLifecycleScopeProvider.from(lifecycleOwner)
+//        );
+//    }
 
     /**
      * 绑定 Activity 的指定生命周期

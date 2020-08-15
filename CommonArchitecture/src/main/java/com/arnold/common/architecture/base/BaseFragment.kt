@@ -9,14 +9,10 @@ import com.arnold.common.architecture.integration.cache.Cache
 import com.arnold.common.architecture.integration.cache.CacheType
 import com.arnold.common.architecture.utils.obtainAppComponentFromContext
 
-abstract class BaseFragment : Fragment(), IFragment {
+abstract class BaseFragment : LazyFragment(), IFragment {
 
     private var mCache: Cache<String, Any>? = null
     private var contentView: View? = null
-    private var isPageVisible: Boolean = false
-    private var isFirst = true
-    private var isPrepared: Boolean = false
-
 
     @Synchronized
     override fun provideCache(): Cache<String, Any> {
@@ -25,11 +21,6 @@ abstract class BaseFragment : Fragment(), IFragment {
                     .build(CacheType.FRAGMENT_CACHE)
         }
         return mCache!!
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        isPrepared = true
     }
 
     override fun onCreateView(
@@ -53,7 +44,7 @@ abstract class BaseFragment : Fragment(), IFragment {
         }
 
         if (contentView?.parent != null) {
-            var parent = contentView?.parent
+            val parent = contentView?.parent
             if (parent is ViewGroup) {
                 parent.removeView(contentView)
             }
@@ -66,47 +57,7 @@ abstract class BaseFragment : Fragment(), IFragment {
         initView(view, savedInstanceState)
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        if (userVisibleHint) {
-            userVisibleHint = true
-        }
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        if (userVisibleHint) {
-            isPageVisible = true
-            lazyLoad()
-        } else {
-            isPageVisible = false
-            onInvisible()
-        }
-    }
-
-    protected fun onVisible(isVisible: Boolean) {
-        lazyLoad()
-    }
-
-    /**
-     * 懒加载
-     */
-    private fun lazyLoad() {
-        if (!isPrepared || !isPageVisible || !isFirst) {
-            return
-        }
-        updateView()
-        isFirst = false
-    }
-
-    protected open fun updateView() {
+    override fun lazyLoad() {
 
     }
-
-    /**
-     * fragment被设置为不可见时调用
-     */
-    protected fun onInvisible() {}
-
 }

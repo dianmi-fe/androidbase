@@ -1,6 +1,6 @@
 package com.arnold.common.mvp.integration.lifecycle
 
-import com.trello.rxlifecycle3.android.ActivityEvent
+import com.trello.rxlifecycle4.android.ActivityEvent
 
 
 /**

@@ -3,9 +3,9 @@ package com.arnold.common.mvp
 import android.os.Bundle
 import com.arnold.common.architecture.base.BaseActivity
 import com.arnold.common.mvp.integration.lifecycle.ActivityLifecycleable
-import com.trello.rxlifecycle3.android.ActivityEvent
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
+import com.trello.rxlifecycle4.android.ActivityEvent
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import io.reactivex.rxjava3.subjects.Subject
 import javax.inject.Inject
 
 abstract class BaseMvpActivity<P : IPresenter> : BaseActivity(), IView ,
@@ -21,11 +21,9 @@ abstract class BaseMvpActivity<P : IPresenter> : BaseActivity(), IView ,
         initData(savedInstanceState)
     }
 
-
     override fun provideLifecycleSubject(): Subject<ActivityEvent> {
         return mLifecycleSubject
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

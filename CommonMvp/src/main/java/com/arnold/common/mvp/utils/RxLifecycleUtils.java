@@ -2,18 +2,17 @@ package com.arnold.common.mvp.utils;
 
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
 
 import com.arnold.common.architecture.utils.Preconditions;
 import com.arnold.common.mvp.IView;
 import com.arnold.common.mvp.integration.lifecycle.ActivityLifecycleable;
 import com.arnold.common.mvp.integration.lifecycle.FragmentLifecycleable;
 import com.arnold.common.mvp.integration.lifecycle.Lifecycleable;
-import com.trello.rxlifecycle3.LifecycleTransformer;
-import com.trello.rxlifecycle3.RxLifecycle;
-import com.trello.rxlifecycle3.android.ActivityEvent;
-import com.trello.rxlifecycle3.android.FragmentEvent;
-import com.trello.rxlifecycle3.android.RxLifecycleAndroid;
+import com.trello.rxlifecycle4.LifecycleTransformer;
+import com.trello.rxlifecycle4.RxLifecycle;
+import com.trello.rxlifecycle4.android.ActivityEvent;
+import com.trello.rxlifecycle4.android.FragmentEvent;
+import com.trello.rxlifecycle4.android.RxLifecycleAndroid;
 
 
 /**

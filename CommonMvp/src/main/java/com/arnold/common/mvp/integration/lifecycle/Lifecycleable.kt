@@ -1,7 +1,6 @@
 package com.arnold.common.mvp.integration.lifecycle
 
-import io.reactivex.Observable
-import io.reactivex.subjects.Subject
+import io.reactivex.rxjava3.subjects.Subject
 
 
 /**

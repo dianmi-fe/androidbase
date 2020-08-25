@@ -16,7 +16,6 @@
 package com.arnold.common.architecture.integration.cache;
 
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 

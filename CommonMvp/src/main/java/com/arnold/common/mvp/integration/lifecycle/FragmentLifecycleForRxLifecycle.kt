@@ -4,8 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.trello.rxlifecycle3.android.FragmentEvent
-import io.reactivex.subjects.Subject
+import com.trello.rxlifecycle4.android.FragmentEvent
+import io.reactivex.rxjava3.subjects.Subject
 
 /**
  * 配合 [FragmentLifecycleable] 使用,使 [Fragment] 具有 [RxLifecycle] 的特性

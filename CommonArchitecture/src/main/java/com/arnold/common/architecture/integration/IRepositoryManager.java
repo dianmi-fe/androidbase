@@ -38,20 +38,16 @@ public interface IRepositoryManager {
     <T> T obtainRetrofitService(@NonNull Class<T> service);
 
 
-    /**
-     * 根据传入的 Class 获取对应的 RxCache service
-     *
-     * @param cache RxCache service class
-     * @param <T>   RxCache service 类型
-     * @return RxCache service
-     */
-    @NonNull
-    <T> T obtainCacheService(@NonNull Class<T> cache);
+//    /**
+//     * 根据传入的 Class 获取对应的 RxCache service
+//     *
+//     * @param cache RxCache service class
+//     * @param <T>   RxCache service 类型
+//     * @return RxCache service
+//     */
+//    @NonNull
+//    <T> T obtainCacheService(@NonNull Class<T> cache);
 
-    /**
-     * 清理所有缓存
-     */
-    void clearAllCache();
 
     /**
      * 获取 Context

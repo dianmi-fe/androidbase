@@ -3,8 +3,8 @@ package com.arnold.common.mvp.integration.lifecycle
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import com.trello.rxlifecycle3.android.ActivityEvent
-import io.reactivex.subjects.Subject
+import com.trello.rxlifecycle4.android.ActivityEvent
+import io.reactivex.rxjava3.subjects.Subject
 
 /**
  * 配合 [ActivityLifecycleable] 使用,使 [Activity] 具有 [RxLifecycle] 的特性

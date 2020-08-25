@@ -37,12 +37,6 @@ dependencies {
     implementation rootProject.ext.dependencies["kotlin_stdlib"]
     implementation rootProject.ext.dependencies["dagger2"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
-    api rootProject.ext.dependencies["rxcache-jolyglot-gson"]
-    api(rootProject.ext.dependencies["rxcache2"]) {
-        exclude module: 'rxjava'
-        exclude module: 'dagger'
-        exclude module: 'api'
-    }
     api rootProject.ext.dependencies["mmkv"]
 }
 

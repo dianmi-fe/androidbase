@@ -2,7 +2,7 @@ package com.arnold.mvvmcomponent.login.model
 
 import com.arnold.common.architecture.integration.IRepositoryManager
 import com.arnold.common.mvvm.BaseModel
-import io.reactivex.Observable
+import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
 
 class LoginModel

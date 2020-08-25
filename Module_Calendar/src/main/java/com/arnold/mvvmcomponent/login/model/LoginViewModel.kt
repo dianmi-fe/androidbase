@@ -7,8 +7,7 @@ import com.arnold.common.architecture.di.scope.ActivityScope
 import com.arnold.common.mvvm.BaseViewModel
 import com.arnold.common.mvvm.app.toResourceLiveData
 import com.arnold.common.mvvm.data.Resource
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @ActivityScope

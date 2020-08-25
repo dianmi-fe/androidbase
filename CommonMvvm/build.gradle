@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -49,12 +49,12 @@ dependencies {
 
 
 
-publish {
-    userOrg = 'arnoldtian'              //bintray注册的用户名
-    repoName = 'Ehr'                    //    仓库名
-    groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
-    artifactId = 'x-ehrMvvm'     //compile引用时的第2部分项目名
-    publishVersion = rootProject.ext.android.versionName    //compile引用时的第3部分版本号
-    desc = 'Androidx,二号人事部mvvm架构开发模式'
-    website = 'http://gitlab-test.dianmi365.com'
-}
+//publish {
+//    userOrg = 'arnoldtian'              //bintray注册的用户名
+//    repoName = 'Ehr'                    //    仓库名
+//    groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
+//    artifactId = 'x-ehrMvvm'     //compile引用时的第2部分项目名
+//    publishVersion = rootProject.ext.android.versionName    //compile引用时的第3部分版本号
+//    desc = 'Androidx,二号人事部mvvm架构开发模式'
+//    website = 'http://gitlab-test.dianmi365.com'
+//}

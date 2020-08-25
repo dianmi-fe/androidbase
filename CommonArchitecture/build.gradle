@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-//apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -42,10 +42,10 @@ dependencies {
     implementation rootProject.ext.dependencies["core_ktx"]
     implementation rootProject.ext.dependencies["constraintlayout"]
 
-    api project(path: ':CommonNetwork')
-    api project(path: ':CommonRepository')
-//    api 'com.arnoldx.ehr:x-ehrNetwork:0.1.6'
-//    api 'com.arnoldx.ehr:x-ehrRepository:0.1.6'
+//    api project(path: ':CommonNetwork')
+//    api project(path: ':CommonRepository')
+    api 'com.arnoldx.ehr:x-ehrNetwork:0.1.7'
+    api 'com.arnoldx.ehr:x-ehrRepository:0.1.7'
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["rxjava"]
     api(rootProject.ext.dependencies["rxandroid"]) {
@@ -54,18 +54,29 @@ dependencies {
 
     api rootProject.ext.dependencies["glide"]
 
+    api (rootProject.ext.dependencies["autodispose"]){
+        exclude module: 'rxjava'
+    }
+    api (rootProject.ext.dependencies["autodispose-android"]){
+        exclude module: 'rxjava'
+    }
+    api (rootProject.ext.dependencies["autodispose-lifecycle"]){
+        exclude module: 'rxjava'
+    }
+
     kapt rootProject.ext.dependencies["glide-compiler"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
+
 }
 
-//publish {
-//    userOrg = 'arnoldtian'              //bintray注册的用户名
-//    repoName = 'Ehr'                    //    仓库名
-//    groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
-//    artifactId = 'x-ehrArchitecture'     //compile引用时的第2部分项目名
-//    publishVersion = rootProject.ext.android.versionName    //compile引用时的第3部分版本号
-//    desc = 'Androidx,二号人事部通用框架库。包含BaseApplication、常用的工具类以及架构层的封装'
-//    website = 'http://gitlab-test.dianmi365.com'
-//}
+publish {
+    userOrg = 'arnoldtian'              //bintray注册的用户名
+    repoName = 'Ehr'                    //    仓库名
+    groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
+    artifactId = 'x-ehrArchitecture'     //compile引用时的第2部分项目名
+    publishVersion = rootProject.ext.android.versionName    //compile引用时的第3部分版本号
+    desc = 'Androidx,二号人事部通用框架库。包含BaseApplication、常用的工具类以及架构层的封装'
+    website = 'http://gitlab-test.dianmi365.com'
+}
 
 

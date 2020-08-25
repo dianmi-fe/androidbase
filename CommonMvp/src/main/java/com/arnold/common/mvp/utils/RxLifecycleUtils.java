@@ -11,7 +11,6 @@ import com.arnold.common.mvp.IView;
 import autodispose2.AutoDispose;
 import autodispose2.AutoDisposeConverter;
 import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider;
-import io.reactivex.rxjava3.core.Observable;
 
 
 /**

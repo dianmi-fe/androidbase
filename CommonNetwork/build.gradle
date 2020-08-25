@@ -48,7 +48,7 @@ dependencies {
         exclude module: 'okhttp'
         exclude module: 'okio'
     }
-    implementation(rootProject.ext.dependencies["retrofit-adapter-rxjava2"]) {
+    implementation(rootProject.ext.dependencies["retrofit-adapter-rxjava3"]) {
         exclude module: 'rxjava'
         exclude module: 'okhttp'
         exclude module: 'retrofit'

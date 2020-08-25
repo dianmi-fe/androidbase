@@ -46,16 +46,6 @@ dependencies {
 //    }
     compileOnly rootProject.ext.dependencies["dagger2"]
 
-    api (rootProject.ext.dependencies["autodispose"]){
-        exclude module: 'rxjava'
-    }
-    api (rootProject.ext.dependencies["autodispose-android"]){
-        exclude module: 'rxjava'
-    }
-    api (rootProject.ext.dependencies["autodispose-lifecycle"]){
-        exclude module: 'rxjava'
-    }
-
     compileOnly project(path: ':CommonArchitecture')
 //    compileOnly 'com.arnoldx.ehr:x-ehrArchitecture:0.1.3'
 }

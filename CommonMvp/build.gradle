@@ -34,17 +34,27 @@ android {
 dependencies {
     implementation rootProject.ext.dependencies["kotlin_stdlib"]
     implementation rootProject.ext.dependencies["appcompat"]
-    api(rootProject.ext.dependencies["rxlifecycle"]) {
-        exclude module: 'rxjava'
-        exclude module: 'jsr305'
-    }
-    api(rootProject.ext.dependencies["rxlifecycle-android"]) {
-        exclude module: 'support-annotations'
-        exclude module: 'rxjava'
-        exclude module: 'rxandroid'
-        exclude module: 'rxlifecycle'
-    }
+//    api(rootProject.ext.dependencies["rxlifecycle"]) {
+//        exclude module: 'rxjava'
+//        exclude module: 'jsr305'
+//    }
+//    api(rootProject.ext.dependencies["rxlifecycle-android"]) {
+//        exclude module: 'support-annotations'
+//        exclude module: 'rxjava'
+//        exclude module: 'rxandroid'
+//        exclude module: 'rxlifecycle'
+//    }
     compileOnly rootProject.ext.dependencies["dagger2"]
+
+    api (rootProject.ext.dependencies["autodispose"]){
+        exclude module: 'rxjava'
+    }
+    api (rootProject.ext.dependencies["autodispose-android"]){
+        exclude module: 'rxjava'
+    }
+    api (rootProject.ext.dependencies["autodispose-lifecycle"]){
+        exclude module: 'rxjava'
+    }
 
     compileOnly project(path: ':CommonArchitecture')
 //    compileOnly 'com.arnoldx.ehr:x-ehrArchitecture:0.1.3'

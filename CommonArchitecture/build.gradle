@@ -53,8 +53,7 @@ dependencies {
     }
 
     api rootProject.ext.dependencies["glide"]
-//    api rootProject.ext.dependencies["autodispose"]
-//    api rootProject.ext.dependencies["autodispose-lifecycle"]
+
     kapt rootProject.ext.dependencies["glide-compiler"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
 }

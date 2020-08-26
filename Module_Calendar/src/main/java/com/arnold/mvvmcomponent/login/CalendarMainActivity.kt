@@ -1,7 +1,6 @@
 package com.arnold.mvvmcomponent.login
 
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.Observer
 import com.arnold.common.architecture.di.component.AppComponent
 import com.arnold.common.mvvm.BaseMvvmActivity
@@ -29,6 +28,7 @@ class CalendarMainActivity : BaseMvvmActivity<LoginViewModel>() {
     override fun layout(): Any = R.layout.calendar_activity_main
 
     override fun initView(savedInstanceState: Bundle?) {
+
     }
 
     override fun initData(savedInstanceState: Bundle?) {

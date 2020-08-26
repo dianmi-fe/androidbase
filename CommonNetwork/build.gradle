@@ -36,25 +36,25 @@ android {
 
 dependencies {
     implementation rootProject.ext.dependencies["dagger2"]
-    implementation rootProject.ext.dependencies["kotlin_stdlib"]
     kapt rootProject.ext.dependencies["dagger2-compiler"]
+    implementation rootProject.ext.dependencies["kotlin_stdlib"]
     implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["logging-interceptor"]
+
     api rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["logger"]
     api rootProject.ext.dependencies["okhttp3"]
-    implementation rootProject.ext.dependencies["logging-interceptor"]
-
     api(rootProject.ext.dependencies["retrofit"]) {
         exclude module: 'okhttp'
         exclude module: 'okio'
     }
-    implementation(rootProject.ext.dependencies["retrofit-adapter-rxjava3"]) {
+    api(rootProject.ext.dependencies["retrofit-adapter-rxjava3"]) {
         exclude module: 'rxjava'
         exclude module: 'okhttp'
         exclude module: 'retrofit'
         exclude module: 'okio'
     }
-    implementation(rootProject.ext.dependencies["retrofit-converter-gson"]) {
+    api(rootProject.ext.dependencies["retrofit-converter-gson"]) {
         exclude module: 'gson'
         exclude module: 'okhttp'
         exclude module: 'okio'

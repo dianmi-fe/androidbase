@@ -5,22 +5,15 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
-import android.provider.Settings
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
-import autodispose2.AutoDispose
-import autodispose2.ObservableSubscribeProxy
-import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider
 import com.arnold.common.architecture.base.App
 import com.arnold.common.architecture.di.component.AppComponent
 import com.arnold.common.architecture.integration.AppManager
 import com.arnold.common.architecture.utils.Preconditions
-import io.reactivex.rxjava3.annotations.NonNull
-import io.reactivex.rxjava3.core.Observable
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
@@ -33,7 +26,7 @@ fun Context.obtainAppComponentFromContext(): AppComponent {
         applicationContext is App,
         "%s must be implements %s",
         applicationContext.javaClass.name,
-        App::class.java.getName()
+        App::class.java.name
     )
     return (applicationContext as App).getAppComponent()
 }
@@ -181,12 +174,12 @@ fun Context.px2dip(pxValue: Float): Int {
  */
 val Float.dp: Float                 // [xxhdpi](360 -> 1080)
     get() = TypedValue.applyDimension(
-        android.util.TypedValue.COMPLEX_UNIT_DIP, this, Resources.getSystem().displayMetrics
+        TypedValue.COMPLEX_UNIT_DIP, this, Resources.getSystem().displayMetrics
     )
 
 val Int.dp: Int
     get() = TypedValue.applyDimension(
-        android.util.TypedValue.COMPLEX_UNIT_DIP,
+        TypedValue.COMPLEX_UNIT_DIP,
         this.toFloat(),
         Resources.getSystem().displayMetrics
     ).toInt()
@@ -195,7 +188,6 @@ val Float.sp: Float                 // [xxhdpi](360 -> 1080)
     get() = TypedValue.applyDimension(
         TypedValue.COMPLEX_UNIT_SP, this, Resources.getSystem().displayMetrics
     )
-
 
 val Int.sp: Int
     get() = TypedValue.applyDimension(

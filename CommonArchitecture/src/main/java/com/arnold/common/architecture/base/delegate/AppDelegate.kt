@@ -6,11 +6,11 @@ import com.arnold.common.architecture.base.App
 import com.arnold.common.architecture.di.component.AppComponent
 import com.arnold.common.architecture.di.component.DaggerAppComponent
 import com.arnold.common.architecture.di.module.GlobalConfigModule
+import com.arnold.common.architecture.extension.getProcessName
 import com.arnold.common.architecture.integration.ConfigModule
 import com.arnold.common.architecture.integration.ManifestParser
 import com.arnold.common.architecture.integration.cache.IntelligentCache
 import com.arnold.common.architecture.utils.Preconditions
-import com.arnold.common.architecture.utils.getProcessName
 import com.tencent.mmkv.MMKV
 import java.util.*
 import javax.inject.Inject

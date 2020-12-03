@@ -6,15 +6,16 @@
     api 'com.arnoldx.ehr:x-ehrMvvm:0.1.1'
 ```
 
-# 采用AndroidX进行开发（谨慎使用）
+# 采用AndroidX进行开发
 
 # 使用规范
-1. 颜色资源文件：统一在【CommonSdk】用cxxx命名，例如：` <color name="cFFFFFF">#ffffff</color>`
+1. 颜色资源文件：统一在【CommonView】用cxxx命名，例如：` <color name="cFFFFFF">#ffffff</color>`
 - 每个Module都会对资源文件做统一规范，详情见Gradle文件中的 **resourcePrefix** 配置，由于这个配置只能检测XML文件，所有每个Module中的独有的图片资源文件，在文件名面前加上相应的模块名，例如：登录模块：**login_xxx**
 - 控件 id 使用驼峰命名，除公共模块，id 命名都要包含自己的模块名。比如 **tvHomeOpenCart** 表示 home 模块的 TextView，用来打开购物车。
 - 所有Adapter类不能写在V中，必须单独新建一个类
 - 所有的bean文件，只能作为数据载体，不能在里面做任何的逻辑操作，所有的逻辑判断操作全部移到工具类里面处理，每个模块都可以有自己独立的工具类
-- 当页面需要横屏时` android:screenOrientation="landscape"`，具体查看 [横屏适配](#autoSzie)
+- ~~当页面需要横屏时` android:screenOrientation="landscape"`，具体查看 [横屏适配](#autoSzie)   暂时移除~~
+- 横屏异形屏适配 [异形屏适配](#barChange)
 
 
 # 项目架构
@@ -176,6 +177,14 @@ com.arnold.common.sdk.app.GlobalHttpHandlerImpl.onHttpInterceptResponse()
      public float getSizeInDp() {
          return 667;
      }
+```
+
+## <span id="barChange">异形屏适配</span>
+实现**onBarChange**方法监听
+```java
+    public void onBarChange(BarProperties barProperties) {
+
+    }
 ```
 
 

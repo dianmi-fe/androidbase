@@ -1,4 +1,4 @@
-package com.arnold.mvvmcomponent
+package com.test.mvvmcomponent
 
 import org.junit.Test
 

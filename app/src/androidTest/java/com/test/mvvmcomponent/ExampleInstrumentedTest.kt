@@ -1,4 +1,4 @@
-package com.arnold.mvvmcomponent
+package com.test.mvvmcomponent
 
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4

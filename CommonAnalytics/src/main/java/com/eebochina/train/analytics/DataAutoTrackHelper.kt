@@ -1,9 +1,17 @@
 package com.eebochina.train.analytics
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.DialogInterface
 import android.text.TextUtils
 import android.util.Log
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.widget.*
 import com.eebochina.train.analytics.base.IAnalytics
+import com.eebochina.train.analytics.common.AnalyticsConfig
+import com.eebochina.train.analytics.util.AopUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,37 +57,53 @@ object DataAutoTrackHelper {
         return false
     }
 
-    fun trackFragmentSetUserVisibleHint(
-        clazz: Any,
-        isVisibleToUser: Boolean
-    ) {
-
+    fun onFragmentViewCreated(clazz: Any, rootView: View) {
         if (!isFragment(clazz) || clazz !is IAnalytics) {
             return
         }
-        var parentFragment: Any? = null
         try {
-            val getParentFragmentMethod = clazz.javaClass.getMethod("getParentFragment")
-            parentFragment = getParentFragmentMethod.invoke(clazz)
+            //Fragment名称
+            val fragmentName = clazz.javaClass.name
+            rootView.setTag(R.id.arnold_analytics_tag_view_fragment_name, fragmentName)
+            if (rootView is ViewGroup) {
+                traverseView(fragmentName, rootView)
+            }
+
+            //获取所在的 Context
+            val context = rootView.context
+            //将 Context 转成 Activity
+            val activity: Activity = AopUtil.getActivityFromContext(context)
+            if (activity != null) {
+                val window = activity.window
+                window?.decorView?.rootView?.setTag(
+                    R.id.arnold_analytics_tag_view_fragment_name,
+                    ""
+                )
+            }
         } catch (e: java.lang.Exception) {
-            //ignored
+        } finally {
+            trackFragmentAppViewScreen(clazz, AnalyticsConfig.TYPE_FRAGMENT_CREATE)
         }
-        if (parentFragment == null) {
-            if (isVisibleToUser) {
-                if (fragmentIsResumed(clazz)) {
-                    if (!fragmentIsHidden(clazz)) {
-                        trackFragmentAppViewScreen(clazz, true)
-                    }
+    }
+
+    private fun traverseView(fragmentName: String, root: ViewGroup?) {
+        try {
+            if (TextUtils.isEmpty(fragmentName) || root == null) {
+                return
+            }
+            val childCount = root.childCount
+            for (i in 0 until childCount) {
+                val child = root.getChildAt(i)
+                child.setTag(R.id.arnold_analytics_tag_view_fragment_name, fragmentName)
+                if (child is ViewGroup && !(child is ListView ||
+                            child is GridView ||
+                            child is Spinner ||
+                            child is RadioGroup)
+                ) {
+                    traverseView(fragmentName, child)
                 }
             }
-        } else {
-            if (isVisibleToUser && fragmentGetUserVisibleHint(parentFragment)) {
-                if (fragmentIsResumed(clazz) && fragmentIsResumed(parentFragment)) {
-                    if (!fragmentIsHidden(clazz) && !fragmentIsHidden(parentFragment)) {
-                        trackFragmentAppViewScreen(clazz, true)
-                    }
-                }
-            }
+        } catch (e: java.lang.Exception) {
         }
     }
 
@@ -94,14 +118,14 @@ object DataAutoTrackHelper {
             val parentFragment = getParentFragmentMethod.invoke(clazz)
             if (parentFragment == null) {
                 if (!fragmentIsHidden(clazz) && fragmentGetUserVisibleHint(clazz)) {
-                    trackFragmentAppViewScreen(clazz, true)
+                    trackFragmentAppViewScreen(clazz, AnalyticsConfig.TYPE_FRAGMENT_RESUME)
                 }
             } else {
                 if (!fragmentIsHidden(clazz) && fragmentGetUserVisibleHint(clazz) && !fragmentIsHidden(
                         parentFragment
                     ) && fragmentGetUserVisibleHint(parentFragment)
                 ) {
-                    trackFragmentAppViewScreen(clazz, true)
+                    trackFragmentAppViewScreen(clazz, AnalyticsConfig.TYPE_FRAGMENT_RESUME)
                 }
             }
         } catch (e: java.lang.Exception) {
@@ -114,50 +138,16 @@ object DataAutoTrackHelper {
             return
         }
         try {
-            trackFragmentAppViewScreen(clazz, false)
+            trackFragmentAppViewScreen(clazz, AnalyticsConfig.TYPE_FRAGMENT_PAUSED)
         } catch (e: java.lang.Exception) {
             //ignored
         }
     }
 
-    fun trackOnHiddenChanged(clazz: Any, hidden: Boolean) {
-
-        if (!isFragment(clazz) || clazz !is IAnalytics) {
-            return
-        }
-        var parentFragment: Any? = null
-        try {
-            val getParentFragmentMethod = clazz.javaClass.getMethod("getParentFragment")
-            parentFragment = getParentFragmentMethod.invoke(clazz)
-        } catch (e: java.lang.Exception) {
-            //ignored
-        }
-        if (parentFragment == null) {
-            if (!hidden) {
-                if (fragmentIsResumed(clazz)) {
-                    if (fragmentGetUserVisibleHint(clazz)) {
-                        trackFragmentAppViewScreen(clazz, false)
-                    }
-                }
-            }
-        } else {
-            if (!hidden && !fragmentIsHidden(parentFragment)
-            ) {
-                if (fragmentIsResumed(clazz) && fragmentIsResumed(parentFragment)
-                ) {
-                    if (fragmentGetUserVisibleHint(clazz) && fragmentGetUserVisibleHint(
-                            parentFragment
-                        )
-                    ) {
-                        trackFragmentAppViewScreen(clazz, false)
-                    }
-                }
-            }
-        }
-    }
-
-
-    private fun trackFragmentAppViewScreen(fragment: IAnalytics, isShow: Boolean) {
+    private fun trackFragmentAppViewScreen(
+        fragment: IAnalytics,
+        fragmentState: Int = AnalyticsConfig.TYPE_FRAGMENT_CREATE
+    ) {
         if ("com.bumptech.glide.manager.SupportRequestManagerFragment" == fragment.javaClass.canonicalName ||
             "com.gyf.immersionbar.SupportRequestManagerFragment" == fragment.javaClass.canonicalName ||
             "com.gyf.immersionbar.RequestManagerFragment" == fragment.javaClass.canonicalName
@@ -169,96 +159,148 @@ object DataAutoTrackHelper {
             return
         }
 
-        var stayTime: Long? = null
-        val time = System.currentTimeMillis()
-        if (isShow) {
-            dataMap["${fragment.pageRoute()}visit"] = time
+        if (dataMap["${fragment.javaClass.canonicalName}/startTime"] != null && fragmentState == AnalyticsConfig.TYPE_FRAGMENT_RESUME) {
+            //说明当前页面刚经过onViewCreated 事件
+            return
+        }
+
+        var startTime = System.currentTimeMillis()
+        val endTime = startTime
+
+        if (fragmentState == AnalyticsConfig.TYPE_FRAGMENT_CREATE || fragmentState == AnalyticsConfig.TYPE_FRAGMENT_RESUME) {
+            dataMap["${fragment.javaClass.canonicalName}/startTime"] = startTime
         } else {
-            val startTime = dataMap.remove("${fragment.pageRoute()}visit")
-            if (startTime != null) {
-                stayTime = time - startTime
+            startTime = dataMap.remove("${fragment.javaClass.canonicalName}/startTime") ?: endTime
+        }
+
+        val bt = when (fragmentState) {
+            AnalyticsConfig.TYPE_FRAGMENT_CREATE -> {
+                AnalyticsConfig.TYPE_START
+            }
+            AnalyticsConfig.TYPE_FRAGMENT_RESUME -> {
+                AnalyticsConfig.TYPE_RESUME
+            }
+            AnalyticsConfig.TYPE_FRAGMENT_PAUSED -> {
+                AnalyticsConfig.TYPE_PAUSE
+            }
+            else -> {
+                AnalyticsConfig.TYPE_PAUSE
             }
         }
+
 
         if (AnalyticsDataApi.debug) {
             Log.i(
                 "Analytics",
-                "行为类型:${if (isShow) "进入页面" else "离开页面"}， 进入时间:${HMS(time)},停留时间:${
-                    if (stayTime != null) HMS(
-                        stayTime
-                    ) else "无"
-                }"
+                "行为类型:${if (bt == 1) "进入页面" else if (bt == 4) "进入前台" else "退入后台"}，${
+                    if (bt == 1 || bt == 4) "进入时间:${
+                        HMS(
+                            startTime
+                        )
+                    }" else "进入时间:${
+                        HMS(
+                            startTime
+                        )
+                    }，离开时间:${HMS(endTime)}"
+                }，${fragment.javaClass.simpleName}"
             )
         }
 
-
-
         AnalyticsDataApi.updateData(
-            if (isShow) AnalyticsDataApi.TYPE_START else AnalyticsDataApi.TYPE_END,
+            bt,
             fragment.javaClass.canonicalName ?: "",
-            "${fragment.pageRoute()}visit",
-            stayTime?.toString() ?: "",
+            fragment.pageRoute(),
+            "",
+            fragment.sessionId(),
+            startTime, endTime,
             fragment.parameter()
         )
     }
 
-    fun trackActivityAppViewScreen(page: String, data: IAnalytics, isShow: Boolean) {
-        if (TextUtils.isEmpty(data.pageRoute())) {
+    fun trackActivityAppViewScreen(
+        activity: IAnalytics,
+        activityState: Int = AnalyticsConfig.TYPE_ACTIVITY_CREATE
+    ) {
+        if (TextUtils.isEmpty(activity.pageRoute())) {
             return
         }
-        var stayTime: Long? = null
-        val time = System.currentTimeMillis()
-        if (isShow) {
-            dataMap["${data.pageRoute()}visit"] = time
+
+        if (dataMap["${activity.javaClass.canonicalName}/startTime"] != null && activityState == AnalyticsConfig.TYPE_ACTIVITY_RESUME) {
+            //说明当前页面刚经过onCreate 事件
+            return
+        }
+
+        var startTime = System.currentTimeMillis()
+        val endTime = startTime
+
+        if (activityState == AnalyticsConfig.TYPE_ACTIVITY_CREATE || activityState == AnalyticsConfig.TYPE_ACTIVITY_RESUME) {
+            dataMap["${activity.javaClass.canonicalName}/startTime"] = startTime
         } else {
-            val startTime = dataMap.remove("${data.pageRoute()}visit")
-            if (startTime != null) {
-                stayTime = time - startTime
+            startTime = dataMap.remove("${activity.javaClass.canonicalName}/startTime") ?: endTime
+        }
+
+        val bt = when (activityState) {
+            AnalyticsConfig.TYPE_ACTIVITY_CREATE -> {
+                AnalyticsConfig.TYPE_START
+            }
+            AnalyticsConfig.TYPE_ACTIVITY_RESUME -> {
+                AnalyticsConfig.TYPE_RESUME
+            }
+            AnalyticsConfig.TYPE_ACTIVITY_PAUSED -> {
+                AnalyticsConfig.TYPE_PAUSE
+            }
+            else -> {
+                AnalyticsConfig.TYPE_PAUSE
             }
         }
 
         if (AnalyticsDataApi.debug) {
             Log.i(
                 "Analytics",
-                "行为类型:${if (isShow) "进入页面" else "离开页面"}， 进入时间:${HMS(time)},停留时间:${
-                    if (stayTime != null) HMS(
-                        stayTime
-                    ) else "无"
-                }"
+                "行为类型:${if (bt == 1) "进入页面" else if (bt == 4) "进入前台" else "退入后台"}，${
+                    if (bt == 1 || bt == 4) "进入时间:${
+                        HMS(
+                            startTime
+                        )
+                    }" else "进入时间:${
+                        HMS(
+                            startTime
+                        )
+                    }，离开时间:${HMS(endTime)}"
+                }，${activity.javaClass.simpleName}"
             )
         }
 
         AnalyticsDataApi.updateData(
-            if (isShow) AnalyticsDataApi.TYPE_START else AnalyticsDataApi.TYPE_END,
-            page, "${data.pageRoute()}visit", stayTime?.toString() ?: "", data.parameter()
+            bt,
+            activity.javaClass.canonicalName,
+            activity.pageRoute(),
+            "",
+            activity.sessionId(),
+            startTime,
+            endTime,
+            activity.parameter()
         )
     }
 
     /**自定义事件*/
-    fun trackEvent(route: String, data: Map<String, Any?>?, pagePath: String? = null) {
-        if (TextUtils.isEmpty(route)) {
-            return
-        }
-        AnalyticsDataApi.updateData(
-            AnalyticsDataApi.TYPE_EVENT,
-            pagePath, route, null, data
-        )
-    }
-
-
-    fun trackApiError(
-        route: String, data: Map<String, Any?>?
+    fun trackEvent(
+        route: String,
+        data: Map<String, Any?>?,
+        pagePath: String? = null,
+        sessionId: String,
+        key: String? = null
     ) {
-
         if (TextUtils.isEmpty(route)) {
             return
         }
+        val startTime = System.currentTimeMillis()
         AnalyticsDataApi.updateData(
-            AnalyticsDataApi.TYPE_API_ERROR,
-            null, route, null, data
+            AnalyticsConfig.TYPE_EVENT,
+            pagePath, route, key, sessionId, startTime, startTime, data
         )
-
     }
+
 
     private fun fragmentIsResumed(fragment: Any): Boolean {
         try {

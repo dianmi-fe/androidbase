@@ -7,6 +7,7 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.FragmentActivity
 import com.eebochina.train.analytics.DataAutoTrackHelper
 import com.eebochina.train.analytics.base.IAnalytics
+import com.eebochina.train.analytics.common.AnalyticsConfig
 
 class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
@@ -18,14 +19,20 @@ class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
             )
         }
 
+        if (activity is IAnalytics && activity.autoTrackPage()) {
+            DataAutoTrackHelper.trackActivityAppViewScreen(
+                activity,
+                AnalyticsConfig.TYPE_ACTIVITY_CREATE
+            )
+        }
+
     }
 
     override fun onActivityResumed(activity: Activity) {
         if (activity is IAnalytics && activity.autoTrackPage()) {
             DataAutoTrackHelper.trackActivityAppViewScreen(
-                activity.javaClass.canonicalName ?: "",
                 activity,
-                true
+                AnalyticsConfig.TYPE_ACTIVITY_RESUME
             )
         }
     }
@@ -33,9 +40,8 @@ class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
     override fun onActivityPaused(activity: Activity) {
         if (activity is IAnalytics && activity.autoTrackPage()) {
             DataAutoTrackHelper.trackActivityAppViewScreen(
-                activity.javaClass.canonicalName ?: "",
                 activity,
-                false
+                AnalyticsConfig.TYPE_ACTIVITY_PAUSED
             )
         }
     }

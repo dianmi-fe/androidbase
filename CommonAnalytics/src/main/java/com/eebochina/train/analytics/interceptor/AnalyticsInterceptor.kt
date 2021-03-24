@@ -2,15 +2,17 @@ package com.eebochina.train.analytics.interceptor
 
 import android.app.Activity
 import android.text.TextUtils
-import android.util.Log
 import com.eebochina.train.analytics.AnalyticsDataApi
 import com.eebochina.train.analytics.base.IAnalytics
+import com.eebochina.train.analytics.common.AnalyticsConfig
 import com.eebochina.train.analytics.entity.ApiInfoBean
 
 object AnalyticsInterceptor {
 
     private val apiInfoBeans: MutableList<ApiInfoBean> = mutableListOf()
+    private val apiErrorBeans: MutableList<ApiInfoBean> = mutableListOf()
     private var lastActivityPath: String? = null
+    private var lastSessionId: String? = null
     private var lastRoute: String? = null
 
     @Synchronized
@@ -21,7 +23,8 @@ object AnalyticsInterceptor {
         requestId: String?,
         accesstoken: String?,
         currentActivity: Activity?,
-        status: String
+        status: String,
+        isSuccessful: Boolean = true
     ) {
 
         val currentActivityPath: String? = currentActivity?.javaClass?.canonicalName
@@ -29,31 +32,38 @@ object AnalyticsInterceptor {
         if (currentActivity != null) {
             if (lastActivityPath != null && lastActivityPath != currentActivityPath && apiInfoBeans.size > 0 || apiInfoBeans.size > 15) {
                 //上报数据
-
-                val tempApiInfoBeans = mutableListOf<ApiInfoBean>()
-                tempApiInfoBeans.addAll(apiInfoBeans)
-
-                val errorSize = tempApiInfoBeans.filter {
-                    it.status != "200"
-                }.size
-
-                if (errorSize > 0) {
-                    //接口报错，上报异常
-                    AnalyticsDataApi.updateData(
-                        AnalyticsDataApi.TYPE_API_ERROR,
-                        null, lastRoute!!, null, null
+                if (apiErrorBeans.size > 0) {
+                    AnalyticsDataApi.updateApi(
+                        lastRoute ?: "",
+                        apiErrorBeans.toList(),
+                        lastActivityPath,
+                        lastSessionId,
+                        System.currentTimeMillis(),
+                        System.currentTimeMillis(),
+                        AnalyticsConfig.TYPE_API_ERROR
                     )
                 }
 
-
-                AnalyticsDataApi.updateApi(lastRoute ?: "", apiInfoBeans.toList())
+                AnalyticsDataApi.updateApi(
+                    lastRoute ?: "",
+                    apiInfoBeans.toList(),
+                    lastActivityPath,
+                    lastSessionId,
+                    System.currentTimeMillis(),
+                    System.currentTimeMillis(),
+                    AnalyticsConfig.TYPE_API_INFO
+                )
                 apiInfoBeans.clear()
+                apiErrorBeans.clear()
             }
             lastActivityPath = currentActivityPath
 
             if (currentActivity is IAnalytics) {
                 lastRoute =
-                    if (TextUtils.isEmpty(currentActivity.pageRoute())) "" else "${currentActivity.pageRoute()}visit"
+                    if (TextUtils.isEmpty(currentActivity.pageRoute())) "" else "${currentActivity.pageRoute()}"
+
+                lastSessionId =
+                    if (TextUtils.isEmpty(currentActivity.sessionId())) "${System.currentTimeMillis()}" else currentActivity.sessionId()
             }
             if (!TextUtils.isEmpty(lastRoute)) {
                 apiInfoBeans.add(
@@ -66,6 +76,18 @@ object AnalyticsInterceptor {
                         url
                     )
                 )
+                if (!isSuccessful) {
+                    apiErrorBeans.add(
+                        ApiInfoBean(
+                            requestId ?: "",
+                            accesstoken ?: "",
+                            sentRequestAtMillis,
+                            receivedResponseAtMillis,
+                            status,
+                            url
+                        )
+                    )
+                }
             }
         }
 

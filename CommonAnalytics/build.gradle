@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -44,18 +44,16 @@ dependencies {
     implementation rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["kotlin_coroutines"]
     api rootProject.ext.dependencies["kotlin_coroutines_android"]
-    implementation "androidx.room:room-runtime:2.2.5"
-    kapt "androidx.room:room-compiler:2.2.5"
 
 }
 
 
-publish {
-    userOrg = 'arnoldtian'              //bintray注册的用户名
-    repoName = 'Ehr'                    //    仓库名
-    groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
-    artifactId = 'analytics'     //compile引用时的第2部分项目名
-    publishVersion = "0.0.4"    //compile引用时的第3部分版本号
-    desc = '事件埋点'
-    website = 'http://gitlab-test.dianmi365.com'
-}
+//publish {
+//    userOrg = 'arnoldtian'              //bintray注册的用户名
+//    repoName = 'Ehr'                    //    仓库名
+//    groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
+//    artifactId = 'analytics'     //compile引用时的第2部分项目名
+//    publishVersion = "0.1.1"    //compile引用时的第3部分版本号
+//    desc = '事件埋点'
+//    website = 'http://gitlab-test.dianmi365.com'
+//}

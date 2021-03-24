@@ -21,12 +21,16 @@ object HttpUtil {
     /**
      * GET请求
      */
-    fun get(url: String, mapParam: Map<String, String>?): String {
+    fun get(
+        url: String,
+        mapParam: Map<String, String>?,
+        header: Map<String, String>? = null
+    ): String {
         try {// 如果有参数的话就拼接参数到url后面
             val urlParam = if (mapParam == null) url else "${url}?${converMap2String(mapParam)}"
             Log.i(TAG, urlParam)
             // 构建URLConnection实例
-            val connection = buildURLConnection(urlParam)
+            val connection = buildURLConnection(urlParam, header = header)
             connection.setContentType()
             connection.connect() // 建立连接
             // 从服务端获取响应码，连接成功是200
@@ -50,9 +54,9 @@ object HttpUtil {
     /**
      * POST请求 - 参数为JSON格式
      */
-    fun post(url: String, jsonParam: String?): String {
+    fun post(url: String, jsonParam: String?, header: Map<String, String>): String {
         try {
-            val connection = buildURLConnection(url, false)
+            val connection = buildURLConnection(url, false, header = header)
             connection.setContentType()
             connection.connect() // 建立连接
             // 向服务端发送请求参数
@@ -87,9 +91,9 @@ object HttpUtil {
     /**
      * POST请求 - 参数为表格格式
      */
-    fun post(url: String, mapParam: Map<String, String>): String {
+    fun post(url: String, mapParam: Map<String, String>, header: Map<String, String>): String {
         try {
-            val connection = buildURLConnection(url, false)
+            val connection = buildURLConnection(url, false, header)
             connection.setContentType(1)
             connection.connect() // 建立连接
             connection.outputStream.let {
@@ -120,16 +124,25 @@ object HttpUtil {
      * @param url 接口地址
      * @param isGet GET请求还是POST
      */
-    private fun buildURLConnection(url: String, isGet: Boolean = true): HttpURLConnection {
+    private fun buildURLConnection(
+        url: String,
+        isGet: Boolean = true,
+        header: Map<String, String>? = null
+    ): HttpURLConnection {
         val connection = URL(url).openConnection() as HttpURLConnection
-        connection.let {
-            it.requestMethod = if (isGet) "GET" else "POST"
-            it.connectTimeout = CONNECT_TIME_OUT
-            it.readTimeout = READ_TIME_OUT
-            it.doInput = true
-            it.doOutput = true
-            it.useCaches = isGet // POST请求不能使用缓存
-            it.instanceFollowRedirects = true // 是否允许HTTP的重定向
+        connection.apply {
+            requestMethod = if (isGet) "GET" else "POST"
+            connectTimeout = CONNECT_TIME_OUT
+            readTimeout = READ_TIME_OUT
+            doInput = true
+            doOutput = true
+            useCaches = isGet // POST请求不能使用缓存
+            instanceFollowRedirects = true // 是否允许HTTP的重定向
+            if (header != null && header.isNotEmpty()) {
+                header.forEach {
+                    setRequestProperty(it.key, it.value)
+                }
+            }
         }
         return connection
     }

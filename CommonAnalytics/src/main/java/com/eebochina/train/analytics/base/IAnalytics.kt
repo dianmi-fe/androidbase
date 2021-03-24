@@ -8,7 +8,7 @@ interface IAnalytics {
     /**路由（匹配名称）*/
     fun pageRoute(): String
 
-    /**回话ID*/
+    /**会话ID*/
     fun sessionId(): String {
         return "${System.currentTimeMillis()}"
     }

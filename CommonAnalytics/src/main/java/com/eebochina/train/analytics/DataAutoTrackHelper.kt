@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.eebochina.train.analytics.base.IAnalytics
 import com.eebochina.train.analytics.common.AnalyticsConfig
+import com.eebochina.train.analytics.interceptor.AnalyticsInterceptor
 import com.eebochina.train.analytics.util.AopUtil
 import java.text.SimpleDateFormat
 import java.util.*
@@ -138,6 +139,7 @@ object DataAutoTrackHelper {
             return
         }
         try {
+
             trackFragmentAppViewScreen(clazz, AnalyticsConfig.TYPE_FRAGMENT_PAUSED)
         } catch (e: java.lang.Exception) {
             //ignored
@@ -170,6 +172,11 @@ object DataAutoTrackHelper {
         if (fragmentState == AnalyticsConfig.TYPE_FRAGMENT_CREATE || fragmentState == AnalyticsConfig.TYPE_FRAGMENT_RESUME) {
             dataMap["${fragment.javaClass.canonicalName}/startTime"] = startTime
         } else {
+            AnalyticsInterceptor.apiUpdate(
+                fragment.javaClass.canonicalName ?: "",
+                fragment.pageRoute(),
+                fragment.sessionId()
+            )
             startTime = dataMap.remove("${fragment.javaClass.canonicalName}/startTime") ?: endTime
         }
 

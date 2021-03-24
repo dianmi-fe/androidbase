@@ -9,6 +9,10 @@ object AnalyticsInterceptor {
     private val apiInfoBeans: MutableList<ApiInfoBean> = mutableListOf()
     private val apiErrorBeans: MutableList<ApiInfoBean> = mutableListOf()
 
+    //临时使用，当请求接口满15条还没上报数据时，使用此变量
+    var tempPagePath: String = ""
+    var tempPageRoute: String = ""
+    var tempSessionId: String = ""
 
     @Synchronized
     fun intercept(
@@ -41,6 +45,10 @@ object AnalyticsInterceptor {
                     url
                 )
             )
+        }
+
+        if (apiInfoBeans.size > 15) {
+            apiUpdate(tempPagePath, tempPageRoute, tempSessionId)
         }
     }
 

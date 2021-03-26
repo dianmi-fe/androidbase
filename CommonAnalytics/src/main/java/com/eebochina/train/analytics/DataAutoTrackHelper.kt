@@ -171,9 +171,9 @@ object DataAutoTrackHelper {
 
         if (fragmentState == AnalyticsConfig.TYPE_FRAGMENT_CREATE || fragmentState == AnalyticsConfig.TYPE_FRAGMENT_RESUME) {
             dataMap["${fragment.javaClass.canonicalName}/startTime"] = startTime
-            AnalyticsInterceptor.pagePath = fragment.javaClass.canonicalName ?: ""
-            AnalyticsInterceptor.pageRoute = fragment.pageRoute()
-            AnalyticsInterceptor.sessionId = fragment.sessionId()
+            AnalyticsInterceptor.tempPagePath = fragment.javaClass.canonicalName ?: ""
+            AnalyticsInterceptor.tempPageRoute = fragment.pageRoute()
+            AnalyticsInterceptor.tempSessionId = fragment.sessionId()
         } else {
             AnalyticsInterceptor.apiUpdate(
                 fragment.javaClass.canonicalName ?: "",

@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'com.arnold.analytics.android'
+//apply plugin: 'com.arnold.analytics.android'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -45,9 +45,9 @@ android {
         }
     }
 
-    arnoldAnalytics {
-        debug = true
-    }
+//    arnoldAnalytics {
+//        debug = true
+//    }
 
     compileOptions {
         sourceCompatibility 1.8

@@ -99,10 +99,6 @@ public class PluginAutoTrackHelper {
             //将 Context 转成 Activity
             Activity activity = AopUtil.getActivityFromContext(context);
 
-            if (activity == null) {
-                return;
-            }
-
             // 获取 view 所在的 fragment
             Object fragment = AopUtil.getFragmentFromView(view, activity);
 
@@ -200,10 +196,6 @@ public class PluginAutoTrackHelper {
             //将 Context 转成 Activity
             Activity activity = AopUtil.getActivityFromContext(context);
 
-            if (activity == null) {
-                return;
-            }
-
             //view 被忽略
             if (AopUtil.isViewIgnored(view)) {
                 return;
@@ -292,10 +284,6 @@ public class PluginAutoTrackHelper {
 
             //将 Context 转成 Activity
             Activity activity = AopUtil.getActivityFromContext(context);
-
-            if (activity == null) {
-                return;
-            }
 
             //view 被忽略
             if (AopUtil.isViewIgnored(view)) {

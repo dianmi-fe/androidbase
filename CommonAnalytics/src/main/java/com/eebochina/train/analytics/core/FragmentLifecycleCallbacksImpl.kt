@@ -14,6 +14,19 @@ class FragmentLifecycleCallbacksImpl : FragmentManager.FragmentLifecycleCallback
         val TAG = "analytics"
     }
 
+    override fun onFragmentViewCreated(
+        fm: FragmentManager,
+        f: Fragment,
+        v: View,
+        savedInstanceState: Bundle?
+    ) {
+        super.onFragmentViewCreated(fm, f, v, savedInstanceState)
+        Log.i(TAG, "onFragmentViewCreated: ${f.javaClass.canonicalName}")
+        if (f is IAnalytics && f.autoTrackPage()) {
+            DataAutoTrackHelper.onFragmentViewCreated(f, v)
+        }
+    }
+
     override fun onFragmentResumed(fm: FragmentManager, f: Fragment) {
         super.onFragmentResumed(fm, f)
 
@@ -41,17 +54,6 @@ class FragmentLifecycleCallbacksImpl : FragmentManager.FragmentLifecycleCallback
         Log.i(TAG, "onFragmentActivityCreated: ${f.javaClass.canonicalName}")
     }
 
-    override fun onFragmentViewCreated(
-        fm: FragmentManager,
-        f: Fragment,
-        v: View,
-        savedInstanceState: Bundle?
-    ) {
-        super.onFragmentViewCreated(fm, f, v, savedInstanceState)
-        Log.i(TAG, "onFragmentViewCreated: ${f.javaClass.canonicalName}")
-        if (f is IAnalytics && f.autoTrackPage()) {
-            DataAutoTrackHelper.onFragmentViewCreated(f, v)
-        }
-    }
+
 
 }

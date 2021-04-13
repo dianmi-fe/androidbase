@@ -12,7 +12,6 @@ object AnalyticsInterceptor {
     //临时使用，当请求接口满15条还没上报数据时，使用此变量
     var tempPagePath: String = ""
     var tempPageRoute: String = ""
-    var tempSessionId: String = ""
 
     @Synchronized
     fun intercept(
@@ -48,12 +47,12 @@ object AnalyticsInterceptor {
         }
 
         if (apiInfoBeans.size > 15) {
-            apiUpdate(tempPagePath, tempPageRoute, tempSessionId)
+            apiUpdate(tempPagePath, tempPageRoute)
         }
     }
 
     @Synchronized
-    fun apiUpdate(pagePath: String, pageRoute: String, sessionId: String) {
+    fun apiUpdate(pagePath: String, pageRoute: String) {
         //上报数据
         try {
             if (apiErrorBeans.size > 0) {
@@ -61,7 +60,6 @@ object AnalyticsInterceptor {
                     pageRoute ?: "",
                     apiErrorBeans.toList(),
                     pagePath,
-                    sessionId,
                     System.currentTimeMillis(),
                     System.currentTimeMillis(),
                     AnalyticsConfig.TYPE_API_ERROR
@@ -72,7 +70,6 @@ object AnalyticsInterceptor {
                     pageRoute ?: "",
                     apiInfoBeans.toList(),
                     pagePath,
-                    sessionId,
                     System.currentTimeMillis(),
                     System.currentTimeMillis(),
                     AnalyticsConfig.TYPE_API_INFO

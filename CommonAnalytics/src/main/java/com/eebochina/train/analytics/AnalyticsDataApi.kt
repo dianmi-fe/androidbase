@@ -8,10 +8,12 @@ import com.eebochina.train.analytics.config.AConfigOptions
 import com.eebochina.train.analytics.core.ActivityLifecycleCallbacksImpl
 import com.eebochina.train.analytics.entity.ApiInfoBean
 import com.eebochina.train.analytics.http.HttpUtil
+import com.eebochina.train.analytics.util.AppMonitor
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.*
 
 object AnalyticsDataApi {
 
@@ -23,6 +25,11 @@ object AnalyticsDataApi {
     private var mSDKConfigInit = true
 
 
+    public var sessionId: String = ""
+    private var startTime: Long = 0
+    private var stopTime: Long = 0
+
+
     fun startWithConfigOptions(application: Application, aConfigOptions: AConfigOptions) {
         this.aConfigOptions = aConfigOptions
         if (mSDKConfigInit) {
@@ -31,6 +38,24 @@ object AnalyticsDataApi {
             HttpUtil.isDebug = aConfigOptions.debug
 
             application.registerActivityLifecycleCallbacks(ActivityLifecycleCallbacksImpl())
+            AppMonitor.get().initialize(application)
+            AppMonitor.get().register(object : AppMonitor.Callback {
+                override fun onAppForeground() {
+                    sessionId = UUID.randomUUID().toString()
+                    startTime = System.currentTimeMillis()
+                    stopTime = 0
+                    updateData(4, null, "", "", startTime, stopTime, null)
+                }
+
+                override fun onAppBackground() {
+                    stopTime = System.currentTimeMillis()
+                    updateData(5, null, "", "", startTime, stopTime, null)
+                }
+
+                override fun onAppUIDestroyed() {
+
+                }
+            })
         }
     }
 
@@ -40,7 +65,6 @@ object AnalyticsDataApi {
         route: String,
         apiInfoBeans: List<ApiInfoBean>,
         pagePath: String? = null,
-        session_id: String?,
         startTime: Long,
         endTime: Long,
         bt: Int = AnalyticsConfig.TYPE_API_INFO
@@ -66,7 +90,7 @@ object AnalyticsDataApi {
 //                put("ac", aConfigOptions?.mobile ?: "")
 //            })
             /**每次登录的唯一标识*/
-            put("session_id", session_id ?: "")
+            put("session_id", sessionId)
             /**行为类型*/
             put("bt", bt)
             /**用户id*/
@@ -118,7 +142,6 @@ object AnalyticsDataApi {
         pagePath: String?,
         route: String,
         key: String?,
-        session_id: String?,
         startTime: Long,
         endTime: Long,
         otherParameters: Map<String, Any?>?
@@ -145,7 +168,7 @@ object AnalyticsDataApi {
             })
 
             /**会话id*/
-            put("session_id", session_id ?: "")
+            put("session_id", sessionId)
             /**行为类型*/
             put("bt", "$bt")
             /**用户id*/
@@ -153,7 +176,7 @@ object AnalyticsDataApi {
             /**时间戳*/
 //            put("t", System.currentTimeMillis())
             /**产品*/
-            put("pd", aConfigOptions?.project ?: "1")
+            put("type", aConfigOptions?.project ?: "1")
             /**屏幕分辨率*/
             put("ds", aConfigOptions?.resolutionRatio ?: "1080x1920")
             /**设备*/

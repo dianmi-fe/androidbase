@@ -8,11 +8,6 @@ interface IAnalytics {
     /**路由（匹配名称）*/
     fun pageRoute(): String
 
-    /**会话ID*/
-    fun sessionId(): String {
-        return "${System.currentTimeMillis()}"
-    }
-
     /**额外参数*/
     fun parameter(): MutableMap<String, Any?>? = null
 

@@ -139,7 +139,6 @@ object DataAutoTrackHelper {
             return
         }
         try {
-
             trackFragmentAppViewScreen(clazz, AnalyticsConfig.TYPE_FRAGMENT_PAUSED)
         } catch (e: java.lang.Exception) {
             //ignored
@@ -161,67 +160,59 @@ object DataAutoTrackHelper {
             return
         }
 
-        if (dataMap["${fragment.javaClass.canonicalName}/startTime"] != null && fragmentState == AnalyticsConfig.TYPE_FRAGMENT_RESUME) {
-            //说明当前页面刚经过onViewCreated 事件
-            return
-        }
+//        if (dataMap["${fragment.javaClass.canonicalName}/startTime"] != null && fragmentState == AnalyticsConfig.TYPE_FRAGMENT_RESUME) {
+//            //说明当前页面刚经过onViewCreated 事件
+//            return
+//        }
 
         var startTime = System.currentTimeMillis()
         val endTime = startTime
 
-        if (fragmentState == AnalyticsConfig.TYPE_FRAGMENT_CREATE || fragmentState == AnalyticsConfig.TYPE_FRAGMENT_RESUME) {
-            dataMap["${fragment.javaClass.canonicalName}/startTime"] = startTime
-            AnalyticsInterceptor.tempPagePath = fragment.javaClass.canonicalName ?: ""
-            AnalyticsInterceptor.tempPageRoute = fragment.pageRoute()
-            AnalyticsInterceptor.tempSessionId = fragment.sessionId()
-        } else {
-            AnalyticsInterceptor.apiUpdate(
-                fragment.javaClass.canonicalName ?: "",
-                fragment.pageRoute(),
-                fragment.sessionId()
-            )
-            startTime = dataMap.remove("${fragment.javaClass.canonicalName}/startTime") ?: endTime
-        }
-
-        val bt = when (fragmentState) {
+        when (fragmentState) {
             AnalyticsConfig.TYPE_FRAGMENT_CREATE -> {
-                AnalyticsConfig.TYPE_START
+//                dataMap["${fragment.javaClass.canonicalName}/startTime"] = startTime
+                AnalyticsInterceptor.tempPagePath = fragment.javaClass.canonicalName ?: ""
+                AnalyticsInterceptor.tempPageRoute = fragment.pageRoute()
+                return
             }
             AnalyticsConfig.TYPE_FRAGMENT_RESUME -> {
-                AnalyticsConfig.TYPE_RESUME
-            }
-            AnalyticsConfig.TYPE_FRAGMENT_PAUSED -> {
-                AnalyticsConfig.TYPE_PAUSE
+                dataMap["${fragment.javaClass.canonicalName}/startTime"] = startTime
+                AnalyticsInterceptor.tempPagePath = fragment.javaClass.canonicalName ?: ""
+                AnalyticsInterceptor.tempPageRoute = fragment.pageRoute()
             }
             else -> {
-                AnalyticsConfig.TYPE_PAUSE
+                AnalyticsInterceptor.apiUpdate(
+                    fragment.javaClass.canonicalName ?: "",
+                    fragment.pageRoute()
+                )
+
+                startTime = dataMap.remove("${fragment.javaClass.canonicalName}/startTime") ?: endTime
+
+                //因为不统计页面离开，所以暂时return
+                return
             }
         }
 
-
-        if (AnalyticsDataApi.debug) {
-            Log.i(
-                "Analytics",
-                "行为类型:${if (bt == 1) "进入页面" else if (bt == 4) "进入前台" else "退入后台"}，${
-                    if (bt == 1 || bt == 4) "进入时间:${
-                        HMS(
-                            startTime
-                        )
-                    }" else "进入时间:${
-                        HMS(
-                            startTime
-                        )
-                    }，离开时间:${HMS(endTime)}"
-                }，${fragment.javaClass.simpleName}"
-            )
-        }
+//        val bt = when (fragmentState) {
+//            AnalyticsConfig.TYPE_FRAGMENT_CREATE -> {
+//                AnalyticsConfig.TYPE_START
+//            }
+//            AnalyticsConfig.TYPE_FRAGMENT_RESUME -> {
+//                AnalyticsConfig.TYPE_RESUME
+//            }
+//            AnalyticsConfig.TYPE_FRAGMENT_PAUSED -> {
+//                AnalyticsConfig.TYPE_PAUSE
+//            }
+//            else -> {
+//                AnalyticsConfig.TYPE_PAUSE
+//            }
+//        }
 
         AnalyticsDataApi.updateData(
-            bt,
+            AnalyticsConfig.TYPE_START,
             fragment.javaClass.canonicalName ?: "",
             fragment.pageRoute(),
             "",
-            fragment.sessionId(),
             startTime, endTime,
             fragment.parameter()
         )
@@ -235,58 +226,58 @@ object DataAutoTrackHelper {
             return
         }
 
-        if (dataMap["${activity.javaClass.canonicalName}/startTime"] != null && activityState == AnalyticsConfig.TYPE_ACTIVITY_RESUME) {
-            //说明当前页面刚经过onCreate 事件
-            return
-        }
+//        if (dataMap["${activity.javaClass.canonicalName}/startTime"] != null && activityState == AnalyticsConfig.TYPE_ACTIVITY_RESUME) {
+//            //说明当前页面刚经过onCreate 事件
+//            return
+//        }
 
         var startTime = System.currentTimeMillis()
         val endTime = startTime
 
-        if (activityState == AnalyticsConfig.TYPE_ACTIVITY_CREATE || activityState == AnalyticsConfig.TYPE_ACTIVITY_RESUME) {
-            dataMap["${activity.javaClass.canonicalName}/startTime"] = startTime
-        } else {
-            startTime = dataMap.remove("${activity.javaClass.canonicalName}/startTime") ?: endTime
-        }
-
-        val bt = when (activityState) {
+        when (activityState) {
             AnalyticsConfig.TYPE_ACTIVITY_CREATE -> {
-                AnalyticsConfig.TYPE_START
+                dataMap["${activity.javaClass.canonicalName}/startTime"] = startTime
+                AnalyticsInterceptor.tempPagePath = activity.javaClass.canonicalName ?: ""
+                AnalyticsInterceptor.tempPageRoute = activity.pageRoute()
             }
             AnalyticsConfig.TYPE_ACTIVITY_RESUME -> {
-                AnalyticsConfig.TYPE_RESUME
-            }
-            AnalyticsConfig.TYPE_ACTIVITY_PAUSED -> {
-                AnalyticsConfig.TYPE_PAUSE
+//                dataMap["${activity.javaClass.canonicalName}/startTime"] = startTime
+                AnalyticsInterceptor.tempPagePath = activity.javaClass.canonicalName ?: ""
+                AnalyticsInterceptor.tempPageRoute = activity.pageRoute()
+                return
             }
             else -> {
-                AnalyticsConfig.TYPE_PAUSE
+                AnalyticsInterceptor.apiUpdate(
+                    activity.javaClass.canonicalName ?: "",
+                    activity.pageRoute()
+                )
+
+                startTime = dataMap.remove("${activity.javaClass.canonicalName}/startTime") ?: endTime
+                //因为不统计页面离开，所以暂时return
+                return
             }
         }
 
-        if (AnalyticsDataApi.debug) {
-            Log.i(
-                "Analytics",
-                "行为类型:${if (bt == 1) "进入页面" else if (bt == 4) "进入前台" else "退入后台"}，${
-                    if (bt == 1 || bt == 4) "进入时间:${
-                        HMS(
-                            startTime
-                        )
-                    }" else "进入时间:${
-                        HMS(
-                            startTime
-                        )
-                    }，离开时间:${HMS(endTime)}"
-                }，${activity.javaClass.simpleName}"
-            )
-        }
+//        val bt = when (activityState) {
+//            AnalyticsConfig.TYPE_ACTIVITY_CREATE -> {
+//                AnalyticsConfig.TYPE_START
+//            }
+//            AnalyticsConfig.TYPE_ACTIVITY_RESUME -> {
+//                AnalyticsConfig.TYPE_RESUME
+//            }
+//            AnalyticsConfig.TYPE_ACTIVITY_PAUSED -> {
+//                AnalyticsConfig.TYPE_PAUSE
+//            }
+//            else -> {
+//                AnalyticsConfig.TYPE_PAUSE
+//            }
+//        }
 
         AnalyticsDataApi.updateData(
-            bt,
+            AnalyticsConfig.TYPE_START,
             activity.javaClass.canonicalName,
             activity.pageRoute(),
             "",
-            activity.sessionId(),
             startTime,
             endTime,
             activity.parameter()
@@ -298,7 +289,6 @@ object DataAutoTrackHelper {
         route: String,
         data: Map<String, Any?>?,
         pagePath: String? = null,
-        sessionId: String,
         key: String? = null
     ) {
         if (TextUtils.isEmpty(route)) {
@@ -307,7 +297,7 @@ object DataAutoTrackHelper {
         val startTime = System.currentTimeMillis()
         AnalyticsDataApi.updateData(
             AnalyticsConfig.TYPE_EVENT,
-            pagePath, route, key, sessionId, startTime, startTime, data
+            pagePath, route, key, startTime, startTime, data
         )
     }
 

@@ -51,11 +51,6 @@ public class PluginAutoTrackHelper {
                 return;
             }
 
-            String sessionId = (String) pro.remove("sessionId");
-            if (sessionId == null) {
-                return;
-            }
-
             String pagePath = (String) pro.remove("pagePath");
             if (pagePath == null) {
                 return;
@@ -68,7 +63,7 @@ public class PluginAutoTrackHelper {
                 parameter.put(key, pro.get(key));
             }
 
-            DataAutoTrackHelper.INSTANCE.trackEvent(pageRoute, parameter, pagePath, sessionId, eventName);
+            DataAutoTrackHelper.INSTANCE.trackEvent(pageRoute, parameter, pagePath, eventName);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -113,18 +108,15 @@ public class PluginAutoTrackHelper {
 
             String pagePath = "";
             String route = "";
-            String sessionId = "";
             Map<String, Object> parameter;
 
             if (fragment instanceof IAnalytics && ((IAnalytics) fragment).autoTrackPage()) {
                 pagePath = fragment.getClass().getCanonicalName();
                 route = ((IAnalytics) fragment).pageRoute();
-                sessionId = ((IAnalytics) fragment).sessionId();
                 parameter = ((IAnalytics) fragment).parameter();
             } else if (activity instanceof IAnalytics && ((IAnalytics) activity).autoTrackPage()) {
                 pagePath = activity.getClass().getCanonicalName();
                 route = ((IAnalytics) activity).pageRoute();
-                sessionId = ((IAnalytics) activity).sessionId();
                 parameter = ((IAnalytics) activity).parameter();
             } else {
                 return;
@@ -150,7 +142,7 @@ public class PluginAutoTrackHelper {
                 parameter.put("element_id", idString);
             }
 
-            DataAutoTrackHelper.INSTANCE.trackEvent(route, parameter, pagePath, sessionId, viewText);
+            DataAutoTrackHelper.INSTANCE.trackEvent(route, parameter, pagePath, viewText);
 
             if (AnalyticsDataApi.INSTANCE.getDebug()) {
                 Log.d(TAG, "=============trackViewOnClick");
@@ -206,18 +198,15 @@ public class PluginAutoTrackHelper {
 
             String pagePath = "";
             String route = "";
-            String sessionId = "";
             Map<String, Object> parameter;
 
             if (fragment instanceof IAnalytics && ((IAnalytics) fragment).autoTrackPage()) {
                 pagePath = fragment.getClass().getCanonicalName();
                 route = ((IAnalytics) fragment).pageRoute();
-                sessionId = ((IAnalytics) fragment).sessionId();
                 parameter = ((IAnalytics) fragment).parameter();
             } else if (activity instanceof IAnalytics && ((IAnalytics) activity).autoTrackPage()) {
                 pagePath = activity.getClass().getCanonicalName();
                 route = ((IAnalytics) activity).pageRoute();
-                sessionId = ((IAnalytics) activity).sessionId();
                 parameter = ((IAnalytics) activity).parameter();
             } else {
                 return;
@@ -258,7 +247,7 @@ public class PluginAutoTrackHelper {
                 parameter.putAll(properties);
             }
 
-            DataAutoTrackHelper.INSTANCE.trackEvent(route, parameter, pagePath, sessionId, viewText);
+            DataAutoTrackHelper.INSTANCE.trackEvent(route, parameter, pagePath, viewText);
             if (AnalyticsDataApi.INSTANCE.getDebug()) {
                 Log.d(TAG, "=============trackListView");
             }
@@ -295,18 +284,15 @@ public class PluginAutoTrackHelper {
 
             String pagePath = "";
             String route = "";
-            String sessionId = "";
             Map<String, Object> parameter;
 
             if (fragment instanceof IAnalytics && ((IAnalytics) fragment).autoTrackPage()) {
                 pagePath = fragment.getClass().getCanonicalName();
                 route = ((IAnalytics) fragment).pageRoute();
-                sessionId = ((IAnalytics) fragment).sessionId();
                 parameter = ((IAnalytics) fragment).parameter();
             } else if (activity instanceof IAnalytics && ((IAnalytics) activity).autoTrackPage()) {
                 pagePath = activity.getClass().getCanonicalName();
                 route = ((IAnalytics) activity).pageRoute();
-                sessionId = ((IAnalytics) activity).sessionId();
                 parameter = ((IAnalytics) activity).parameter();
             } else {
                 return;
@@ -344,7 +330,7 @@ public class PluginAutoTrackHelper {
                     e.printStackTrace();
                 }
             }
-            DataAutoTrackHelper.INSTANCE.trackEvent(route, parameter, pagePath, sessionId, viewText);
+            DataAutoTrackHelper.INSTANCE.trackEvent(route, parameter, pagePath, viewText);
             if (AnalyticsDataApi.INSTANCE.getDebug()) {
                 Log.d(TAG, "=============trackRadioGroup");
             }

@@ -43,7 +43,7 @@ object AnalyticsDataApi {
                 override fun onAppForeground() {
                     sessionId = UUID.randomUUID().toString()
                     startTime = System.currentTimeMillis()
-                    stopTime = 0
+                    stopTime = startTime
                     updateData(4, null, "", "", startTime, stopTime, null)
                 }
 
@@ -63,10 +63,11 @@ object AnalyticsDataApi {
     /**上传api数据*/
     fun updateApi(
         route: String,
-        apiInfoBeans: List<ApiInfoBean>,
+        count: Int,
+        errorCount: Int,
         pagePath: String? = null,
-        startTime: Long,
-        endTime: Long,
+        startTime: Long?,
+        endTime: Long?,
         bt: Int = AnalyticsConfig.TYPE_API_INFO
     ) {
 
@@ -100,14 +101,21 @@ object AnalyticsDataApi {
             /**产品*/
             put("type", aConfigOptions?.project ?: "1")
             /**屏幕分辨率*/
-            put("ds", aConfigOptions?.resolutionRatio ?: "1080x1920")
+//            put("ds", aConfigOptions?.resolutionRatio ?: "1080x1920")
             /**设备*/
 //            put("os", "2")
             /**路由*/
             put("sc", route)
-            put("api", apiInfoBeans)
-            put("st", startTime)
-            put("et", endTime)
+            put("api", mutableMapOf<String, Int>().apply {
+                put("count", count)
+                put("error_count", errorCount)
+            })
+            startTime?.let {
+                put("st", startTime)
+            }
+            endTime?.let {
+                put("et", endTime)
+            }
             pagePath?.let {
                 /**当前页面url（web）、页面路径（小程序）*/
                 put("u", pagePath)
@@ -142,8 +150,8 @@ object AnalyticsDataApi {
         pagePath: String?,
         route: String,
         key: String?,
-        startTime: Long,
-        endTime: Long,
+        startTime: Long?,
+        endTime: Long?,
         otherParameters: Map<String, Any?>?
     ) {
         if (TextUtils.isEmpty(aConfigOptions?.serviceUrl)) {
@@ -178,13 +186,17 @@ object AnalyticsDataApi {
             /**产品*/
             put("type", aConfigOptions?.project ?: "1")
             /**屏幕分辨率*/
-            put("ds", aConfigOptions?.resolutionRatio ?: "1080x1920")
+//            put("ds", aConfigOptions?.resolutionRatio ?: "1080x1920")
             /**设备*/
 //            put("os", "2")
             /**路由*/
             put("sc", route)
-            put("st", startTime)
-            put("et", endTime)
+            startTime?.let {
+                put("st", startTime)
+            }
+            endTime?.let {
+                put("et", endTime)
+            }
             pagePath?.let {
                 /**当前页面url（web）、页面路径（小程序）*/
                 put("u", pagePath)

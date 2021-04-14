@@ -55,23 +55,24 @@ object AnalyticsInterceptor {
     fun apiUpdate(pagePath: String, pageRoute: String) {
         //上报数据
         try {
-            if (apiErrorBeans.size > 0) {
-                AnalyticsDataApi.updateApi(
-                    pageRoute ?: "",
-                    apiErrorBeans.toList(),
-                    pagePath,
-                    System.currentTimeMillis(),
-                    System.currentTimeMillis(),
-                    AnalyticsConfig.TYPE_API_ERROR
-                )
-            }
+//            if (apiErrorBeans.size > 0) {
+//                AnalyticsDataApi.updateApi(
+//                    pageRoute ?: "",
+//                    apiErrorBeans.size,
+//                    pagePath,
+//                    System.currentTimeMillis(),
+//                    System.currentTimeMillis(),
+//                    AnalyticsConfig.TYPE_API_ERROR
+//                )
+//            }
             if (apiInfoBeans.size > 0) {
                 AnalyticsDataApi.updateApi(
                     pageRoute ?: "",
-                    apiInfoBeans.toList(),
+                    apiInfoBeans.size,
+                    apiErrorBeans.size,
                     pagePath,
-                    System.currentTimeMillis(),
-                    System.currentTimeMillis(),
+                    null,
+                   null,
                     AnalyticsConfig.TYPE_API_INFO
                 )
             }

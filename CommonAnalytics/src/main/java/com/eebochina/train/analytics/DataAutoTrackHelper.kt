@@ -186,7 +186,8 @@ object DataAutoTrackHelper {
                     fragment.pageRoute()
                 )
 
-                startTime = dataMap.remove("${fragment.javaClass.canonicalName}/startTime") ?: endTime
+                startTime =
+                    dataMap.remove("${fragment.javaClass.canonicalName}/startTime") ?: endTime
 
                 //因为不统计页面离开，所以暂时return
                 return
@@ -213,7 +214,8 @@ object DataAutoTrackHelper {
             fragment.javaClass.canonicalName ?: "",
             fragment.pageRoute(),
             "",
-            startTime, endTime,
+            null,
+            null,
             fragment.parameter()
         )
     }
@@ -252,7 +254,8 @@ object DataAutoTrackHelper {
                     activity.pageRoute()
                 )
 
-                startTime = dataMap.remove("${activity.javaClass.canonicalName}/startTime") ?: endTime
+                startTime =
+                    dataMap.remove("${activity.javaClass.canonicalName}/startTime") ?: endTime
                 //因为不统计页面离开，所以暂时return
                 return
             }
@@ -278,8 +281,8 @@ object DataAutoTrackHelper {
             activity.javaClass.canonicalName,
             activity.pageRoute(),
             "",
-            startTime,
-            endTime,
+            null,
+            null,
             activity.parameter()
         )
     }
@@ -294,10 +297,10 @@ object DataAutoTrackHelper {
         if (TextUtils.isEmpty(route)) {
             return
         }
-        val startTime = System.currentTimeMillis()
+//        val startTime = System.currentTimeMillis()
         AnalyticsDataApi.updateData(
             AnalyticsConfig.TYPE_EVENT,
-            pagePath, route, key, startTime, startTime, data
+            pagePath, route, key, null, null, data
         )
     }
 

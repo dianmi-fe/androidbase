@@ -53,7 +53,7 @@ publish {
     repoName = 'Ehr'                    //    仓库名
     groupId = 'com.arnoldx.ehr'         //compile引用时的第1部分groupId
     artifactId = 'analytics'     //compile引用时的第2部分项目名
-    publishVersion = "0.2.8"    //compile引用时的第3部分版本号
+    publishVersion = "0.2.11"    //compile引用时的第3部分版本号
     desc = '事件埋点'
     website = 'http://gitlab-test.dianmi365.com'
 }

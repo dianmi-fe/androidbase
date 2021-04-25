@@ -6,7 +6,6 @@ import android.util.Log
 import com.eebochina.train.analytics.common.AnalyticsConfig
 import com.eebochina.train.analytics.config.AConfigOptions
 import com.eebochina.train.analytics.core.ActivityLifecycleCallbacksImpl
-import com.eebochina.train.analytics.entity.ApiInfoBean
 import com.eebochina.train.analytics.http.HttpUtil
 import com.eebochina.train.analytics.util.AppMonitor
 import com.google.gson.Gson
@@ -23,6 +22,9 @@ object AnalyticsDataApi {
 
     /* SDK 配置是否初始化 */
     private var mSDKConfigInit = true
+
+    //上一个页面路径
+    private var lastPagePath: String? = null
 
 
     public var sessionId: String = ""
@@ -41,7 +43,7 @@ object AnalyticsDataApi {
             AppMonitor.get().initialize(application)
             AppMonitor.get().register(object : AppMonitor.Callback {
                 override fun onAppForeground() {
-                    sessionId = UUID.randomUUID().toString()
+                    sessionId = UUID.randomUUID().toString().replace("-", "");
                     startTime = System.currentTimeMillis()
                     stopTime = startTime
                     updateData(4, null, "", "", startTime, stopTime, null)
@@ -191,6 +193,13 @@ object AnalyticsDataApi {
 //            put("os", "2")
             /**路由*/
             put("sc", route)
+
+            if (bt == 1) {
+                lastPagePath?.let {
+                    put("rf", it)
+                }
+            }
+
             startTime?.let {
                 put("st", startTime)
             }
@@ -200,6 +209,7 @@ object AnalyticsDataApi {
             pagePath?.let {
                 /**当前页面url（web）、页面路径（小程序）*/
                 put("u", pagePath)
+                lastPagePath = it
             }
 
         }

@@ -238,15 +238,15 @@ object DataAutoTrackHelper {
 
         when (activityState) {
             AnalyticsConfig.TYPE_ACTIVITY_CREATE -> {
+//                dataMap["${activity.javaClass.canonicalName}/startTime"] = startTime
+//                AnalyticsInterceptor.tempPagePath = activity.javaClass.canonicalName ?: ""
+//                AnalyticsInterceptor.tempPageRoute = activity.pageRoute()
+                return
+            }
+            AnalyticsConfig.TYPE_ACTIVITY_RESUME -> {
                 dataMap["${activity.javaClass.canonicalName}/startTime"] = startTime
                 AnalyticsInterceptor.tempPagePath = activity.javaClass.canonicalName ?: ""
                 AnalyticsInterceptor.tempPageRoute = activity.pageRoute()
-            }
-            AnalyticsConfig.TYPE_ACTIVITY_RESUME -> {
-//                dataMap["${activity.javaClass.canonicalName}/startTime"] = startTime
-                AnalyticsInterceptor.tempPagePath = activity.javaClass.canonicalName ?: ""
-                AnalyticsInterceptor.tempPageRoute = activity.pageRoute()
-                return
             }
             else -> {
                 AnalyticsInterceptor.apiUpdate(

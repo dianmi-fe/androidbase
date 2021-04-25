@@ -19,22 +19,22 @@ class ActivityLifecycleCallbacksImpl : Application.ActivityLifecycleCallbacks {
             )
         }
 
-        if (activity is IAnalytics && activity.autoTrackPage()) {
-            DataAutoTrackHelper.trackActivityAppViewScreen(
-                activity,
-                AnalyticsConfig.TYPE_ACTIVITY_CREATE
-            )
-        }
+//        if (activity is IAnalytics && activity.autoTrackPage()) {
+//            DataAutoTrackHelper.trackActivityAppViewScreen(
+//                activity,
+//                AnalyticsConfig.TYPE_ACTIVITY_CREATE
+//            )
+//        }
 
     }
 
     override fun onActivityResumed(activity: Activity) {
-//        if (activity is IAnalytics && activity.autoTrackPage()) {
-//            DataAutoTrackHelper.trackActivityAppViewScreen(
-//                activity,
-//                AnalyticsConfig.TYPE_ACTIVITY_RESUME
-//            )
-//        }
+        if (activity is IAnalytics && activity.autoTrackPage()) {
+            DataAutoTrackHelper.trackActivityAppViewScreen(
+                activity,
+                AnalyticsConfig.TYPE_ACTIVITY_RESUME
+            )
+        }
     }
 
     override fun onActivityPaused(activity: Activity) {

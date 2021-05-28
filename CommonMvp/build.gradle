@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven'
 
 //apply plugin: 'com.novoda.bintray-release'
 
@@ -59,3 +60,5 @@ dependencies {
 //    desc = 'Androidx,二号人事部mvp架构开发模式'
 //    website = 'http://gitlab-test.dianmi365.com'
 //}
+
+apply from: 'maven.gradle'

@@ -13,7 +13,7 @@ import java.util.*
  */
 object DataHelper {
 
-    private var mmkv: MMKV = MMKV.defaultMMKV()
+    private var mmkv: MMKV = MMKV.defaultMMKV()!!
 
     /**
      * 存储数据
@@ -62,11 +62,11 @@ object DataHelper {
     }
 
     fun decodeByteArray(key: String): ByteArray {
-        return mmkv.decodeBytes(key)
+        return mmkv.decodeBytes(key)!!
     }
 
     fun decodeString(key: String): String {
-        return mmkv.decodeString(key, "")
+        return mmkv.decodeString(key, "")!!
     }
 
     fun <T : Parcelable> decodeParcelable(key: String, tClass: Class<T>): T? {
@@ -74,7 +74,7 @@ object DataHelper {
     }
 
     fun decodeStringSet(key: String): Set<String> {
-        return mmkv.decodeStringSet(key, Collections.emptySet())
+        return mmkv.decodeStringSet(key, Collections.emptySet())!!
     }
 
     fun containsKey(key: String): Boolean {

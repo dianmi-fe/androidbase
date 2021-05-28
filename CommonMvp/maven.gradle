@@ -1,0 +1,22 @@
+apply plugin: 'maven-publish'
+group='com.dianmi'
+
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            Production(MavenPublication) {
+                from components.release
+                groupId = "com.dianmi"
+                artifactId = "mvp"
+                version = rootProject.ext.jitPackVersion
+                // 上传source，这样使用放可以看到方法注释
+                artifact generateSourcesJar
+            }
+        }
+    }
+}

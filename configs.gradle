@@ -1,6 +1,8 @@
 ext {
     isMultiApp = isBuildModule.toBoolean()
 
+    jitPackVersion = "0.0.2"
+
     hosts = [
             api_host_release: "",
             api_host_debug  : "http://"
@@ -102,7 +104,7 @@ ext {
             "arouter-compiler"                    : "com.alibaba:arouter-compiler:${version.aRouterCompilerSdkVersion}",
             "gson"                                : "com.google.code.gson:gson:2.8.6",
             "eventbus"                            : "org.greenrobot:eventbus:3.2.0",
-            "mmkv"                                : "com.tencent:mmkv-static:1.2.2",
+            "mmkv"                                : "com.tencent:mmkv-static:1.2.9",
             "wechat-mta"                          : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.5.3",
             "retrofitUrlManager"                  : "me.jessyan:retrofit-url-manager:1.4.0",
             "immersionbar"                        : "com.gyf.immersionbar:immersionbar:3.0.0",

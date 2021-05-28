@@ -1,4 +1,8 @@
-include ':app', ':CommonArchitecture', ':CommonSdk', ':CommonView', ':CommonMvvm', ':CommonRepository', ':CommonBaseService', ':CommonMvp', 'CommonNetwork'
-
-include ':CommonAnalytics'
-include ':Module_Calendar'
+//include ':CommonSdk', ':CommonBaseService', ':CommonView'
+//include ':CommonNetwork'
+//include ':CommonRepository'
+include ':CommonArchitecture', ':CommonMvp', ':CommonMvvm',':CommonAnalytics'
+// 打开注释会导致./gradlew install失败，install是maven-jitpack相关的
+// 目前Module_Calendar没有用到
+//include ':app', ':Module_Calendar'
+rootProject.name = "androidbase"

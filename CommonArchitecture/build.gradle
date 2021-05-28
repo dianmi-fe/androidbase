@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven'
 
 //apply plugin: 'com.novoda.bintray-release'
 
@@ -42,10 +43,12 @@ dependencies {
     implementation rootProject.ext.dependencies["core_ktx"]
     implementation rootProject.ext.dependencies["constraintlayout"]
 
+    api 'com.github.dianmi-fe.androidbase:reoisitory:0.0.1'
+    api 'com.github.dianmi-fe.androidbase:network:0.0.1'
 //    api project(path: ':CommonNetwork')
 //    api project(path: ':CommonRepository')
-    api 'com.arnoldx.ehr:x-ehrNetwork:0.1.7'
-    api 'com.arnoldx.ehr:x-ehrRepository:0.1.7'
+//    api 'com.arnoldx.ehr:x-ehrNetwork:0.1.7'
+//    api 'com.arnoldx.ehr:x-ehrRepository:0.1.7'
     api rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["rxjava"]
     api(rootProject.ext.dependencies["rxandroid"]) {
@@ -79,4 +82,5 @@ dependencies {
 //    website = 'http://gitlab-test.dianmi365.com'
 //}
 
+apply from: 'maven.gradle'
 

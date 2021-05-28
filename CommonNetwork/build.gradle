@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven'
 
 //apply plugin: 'com.novoda.bintray-release'
 android {
@@ -72,3 +73,4 @@ dependencies {
 //    website = 'http://gitlab-test.dianmi365.com'
 //}
 
+apply from: 'maven.gradle'

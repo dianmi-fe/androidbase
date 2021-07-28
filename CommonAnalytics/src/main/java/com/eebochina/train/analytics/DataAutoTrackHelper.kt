@@ -2,10 +2,7 @@ package com.eebochina.train.analytics
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.DialogInterface
 import android.text.TextUtils
-import android.util.Log
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -300,6 +297,29 @@ object DataAutoTrackHelper {
 //        val startTime = System.currentTimeMillis()
         AnalyticsDataApi.updateData(
             AnalyticsConfig.TYPE_EVENT,
+            pagePath, route, key, null, null, data
+        )
+    }
+
+    /**
+     * 自定义事件
+     * 时间：2021年7月27日17:41:02
+     * 新增sec字段，用于描述事件编码
+     *
+     */
+    fun trackEvent(
+        route: String,
+        data: Map<String, Any?>?,
+        sec: String?,
+        pagePath: String? = null,
+        key: String? = null
+    ) {
+        if (TextUtils.isEmpty(route)) {
+            return
+        }
+//        val startTime = System.currentTimeMillis()
+        AnalyticsDataApi.updateData(
+            AnalyticsConfig.TYPE_EVENT, sec,
             pagePath, route, key, null, null, data
         )
     }

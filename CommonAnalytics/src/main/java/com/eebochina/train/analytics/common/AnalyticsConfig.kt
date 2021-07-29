@@ -14,9 +14,6 @@ object AnalyticsConfig {
     /**进入页面*/
     const val TYPE_START = 1
 
-    /**自定义事件*/
-    const val TYPE_EVENT = 3
-
     /**进入前台*/
     const val TYPE_RESUME = 4
 
@@ -29,5 +26,6 @@ object AnalyticsConfig {
     /**页面接口错误*/
     const val TYPE_API_ERROR = 10
 
-
+    /**自定义事件*/
+    const val TYPE_EVENT = 11
 }

@@ -232,7 +232,7 @@ object AnalyticsDataApi {
      * bt：行为类型 （1: 进入页面2: 离开页面3:事件4: 滚动5: 鼠标滑动6: 分享7.搜索,8: api,10:浏览出错）
      * pagePath：页面路径
      * bd：离开页面时的停留时间等
-     * sec:事件编码（2号人事新增
+     * sec:事件编码（2号人事新增)
      * t：时间戳
      */
     fun updateData(

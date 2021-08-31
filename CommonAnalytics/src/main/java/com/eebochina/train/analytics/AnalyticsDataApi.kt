@@ -197,7 +197,10 @@ object AnalyticsDataApi {
 //            put("os", "2")
             /**路由*/
             put("sc", route)
-
+            /**
+             * 个人端-0 HR端-1（默认为1）
+             */
+            put("ct", "1")
             if (bt == 1) {
                 lastPagePath?.let {
                     put("rf", it)

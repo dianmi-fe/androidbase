@@ -108,6 +108,10 @@ object AnalyticsDataApi {
 //            put("os", "2")
             /**路由*/
             put("sc", route)
+            /**
+             * 个人端-0 HR端-1（默认为1）
+             */
+            put("ct", "1")
             put("api", mutableMapOf<String, Int>().apply {
                 put("count", count)
                 put("error_count", errorCount)
